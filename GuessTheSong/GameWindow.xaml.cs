@@ -10,28 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GuessTheSong
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameWindow : Window
     {
-        public MainWindow()
+        public GameWindow()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Choose_Answer(object sender, RoutedEventArgs e)
         {
-            GameWindow multiPlayer = new GameWindow();
-            this.Visibility = Visibility.Hidden;
-            multiPlayer.Owner = this;
-            multiPlayer.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            multiPlayer.ShowDialog();
+            string answer = ((Button)sender).Content.ToString();
         }
     }
 }
