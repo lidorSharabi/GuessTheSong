@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuessTheSong"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="700">
+        Title="MainWindow" Height="600" Width="700" FontFamily="Comic Sans MS" FontSize="24" >
     <Window.Resources>
 
         <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
@@ -79,18 +79,18 @@
         <Image x:Name="image" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Source="images/GuessTheSong.png" Margin="10"></Image>
 
         <!--right Column-->
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="3" Grid.Column="2" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Tag="First Name" VerticalAlignment="Center" />
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="5" Grid.Column="2" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Tag="Last Name" VerticalAlignment="Center" />
-        <DatePicker HorizontalAlignment="Left"  Grid.Row="7" Grid.Column="2" FontFamily="Comic Sans MS" FontSize="24" Width="200"  VerticalAlignment="Center" SelectedDate="1/1/90"/>
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Tag="Select.." Grid.Row="9" Grid.Column="2" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap"  VerticalAlignment="Center" />
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Tag="Search.." Grid.Row="11" Grid.Column="2" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap"  VerticalAlignment="Center" />
+        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="3" Grid.Column="2" Width="200" TextWrapping="Wrap" Tag="First Name" VerticalAlignment="Center" />
+        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="5" Grid.Column="2" Width="200" TextWrapping="Wrap" Tag="Last Name" VerticalAlignment="Center" />
+        <DatePicker HorizontalAlignment="Left"  Grid.Row="7" Grid.Column="2" Width="200"  VerticalAlignment="Center" SelectedDate="1/1/90"/>
+        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Tag="Select.." Grid.Row="9" Grid.Column="2" Width="200" TextWrapping="Wrap"  VerticalAlignment="Center" />
+        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Tag="Search.." Grid.Row="11" Grid.Column="2" Width="200" TextWrapping="Wrap"  VerticalAlignment="Center" />
         <!--left Column-->
-        <TextBlock HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Text="First Name:" VerticalAlignment="Center" />
-        <TextBlock HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Text="Last Name:" VerticalAlignment="Center" />
-        <TextBlock HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Text="Date of birth:" VerticalAlignment="Center" />
-        <TextBlock HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Text="Genre you like:" VerticalAlignment="Center" />
-        <TextBlock HorizontalAlignment="Left" Grid.Row="11" Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Text="Artists you like:" VerticalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Width="200" TextWrapping="Wrap" Text="First Name:" VerticalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Width="200" TextWrapping="Wrap" Text="Last Name:" VerticalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" Width="200" TextWrapping="Wrap" Text="Date of birth:" VerticalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" Width="200" TextWrapping="Wrap" Text="Genre you like:" VerticalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Left" Grid.Row="11" Grid.Column="1" Width="200" TextWrapping="Wrap" Text="Artists you like:" VerticalAlignment="Center" />
         <!--submit button-->
-        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="13" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" FontSize="24" Width="200" Height="50" Click="Button_Click"/>
+        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="13" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="2" Width="200" Height="50" Click="Button_Click"/>
     </Grid>
 </Window>

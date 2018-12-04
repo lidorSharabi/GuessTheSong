@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GuessTheSong
 {
@@ -19,14 +20,24 @@ namespace GuessTheSong
     /// </summary>
     public partial class GameWindow : Window
     {
+        private DispatcherTimer timer;
         public GameWindow()
         {
             InitializeComponent();
+            this.timer = new DispatcherTimer();
+            this.timer.Tick += timer_Tick;
+            this.timer.Interval = new System.TimeSpan(0, 0, 1);
+            this.timer.Start();
         }
 
         private void Choose_Answer(object sender, RoutedEventArgs e)
         {
             string answer = ((Button)sender).Content.ToString();
+        }
+
+        private void timer_Tick(object sender, System.EventArgs e)
+        {
+            //this.pb.Value = System.DateTime.Now.Second % 100;
         }
     }
 }

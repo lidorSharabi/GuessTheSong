@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuessTheSong"
+        xmlns:controls="clr-namespace:GuessTheSong.Controls"
         mc:Ignorable="d"
-        Title="GameWindow" Height="700" Width="700">
+        Title="GameWindow" Height="700" Width="700" FontFamily="Comic Sans MS" FontSize="20">
     <Window.Resources>
 
         <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
@@ -50,10 +51,60 @@
             </Setter>
         </Style>
 
+        <controls:BorderClipConverter x:Key="BorderClip"/>
+        <Style TargetType="{x:Type ProgressBar}">
+            <Setter Property="Height" Value="16" />
+            <Setter Property="IsIndeterminate" Value="False" />
+            <Setter Property="Background" Value="#2ea1d7"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar" >
+                        <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true">
+                            <Grid Margin="0,0,50,0">
+
+                                <Rectangle x:Name="PART_Track" Fill="White" />
+
+                                <Border x:Name="roundBorder" Background="LightGray" CornerRadius="8" />
+
+                                <Border x:Name="PART_Indicator" HorizontalAlignment="Left">
+
+                                    <Border.Clip>
+                                        <MultiBinding Converter="{StaticResource BorderClip}">
+                                            <Binding Path="ActualWidth" ElementName="roundBorder" />
+                                            <Binding Path="ActualHeight" ElementName="roundBorder" />
+                                            <Binding Path="CornerRadius" ElementName="roundBorder" />
+                                        </MultiBinding>
+                                    </Border.Clip>
+
+                                    <Grid x:Name="Foreground">
+                                        <Rectangle x:Name="Indicator" Fill="{TemplateBinding Background}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <!--<Path Name="_TagBackground" Fill="#B3B3B3" Data="M 0 0 H 44 A 9 9 0 0 1 44 16 H 0 A 9 9 0 0 0 0 0 z" HorizontalAlignment="Right"/>
+                            <TextBlock Name="_Tag" HorizontalAlignment="Right" Text="{TemplateBinding Tag}" Foreground="White" Margin="0,0,10,0"/>
+                            <Viewbox Name="_CheckMark"  HorizontalAlignment="Right" Margin="0,0,15,2" Visibility="Hidden" >
+                                <Path Fill="White" Data="M434.539,98.499l-38.828-38.828c-5.324-5.328-11.799-7.993-19.41-7.993c-7.618,0-14.093,2.665-19.417,7.993L169.59,247.248   l-83.939-84.225c-5.33-5.33-11.801-7.992-19.412-7.992c-7.616,0-14.087,2.662-19.417,7.992L7.994,201.852   C2.664,207.181,0,213.654,0,221.269c0,7.609,2.664,14.088,7.994,19.416l103.351,103.349l38.831,38.828   c5.327,5.332,11.8,7.994,19.414,7.994c7.611,0,14.084-2.669,19.414-7.994l38.83-38.828L434.539,137.33   c5.325-5.33,7.994-11.802,7.994-19.417C442.537,110.302,439.864,103.829,434.539,98.499z" />
+                            </Viewbox>-->
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Value" Value="100">
+                                <Trigger.Setters>
+                                    <!--<Setter TargetName="_TagBackground" Property="Fill" Value="Green"/>
+                                    <Setter TargetName="_Tag" Property="Visibility" Value="Hidden"/>
+                                    <Setter TargetName="_CheckMark" Property="Visibility" Value="Visible"/>-->
+                                </Trigger.Setters>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="150" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="10" />
             <RowDefinition Height="10" />
             <RowDefinition Height="*" />
@@ -73,33 +124,56 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
-        <Image x:Name="suolKey" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="3" Source="images/question.png" Margin="-184,55,-172,0"></Image>
-        <TextBlock HorizontalAlignment="Center" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="310" Height="100" TextWrapping="Wrap" Text="Imagine there's no heaven..Imagine there's no heaven......" VerticalAlignment="Center" Margin="34,94,48,47" Padding="5"/>
-        <Image x:Name="image" Grid.Row="0" Width="40" Height="40" Source="images/suolKey.png" Grid.Column="1" Margin="163,64,189,46"></Image>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <ProgressBar  Grid.ColumnSpan="2" Value="70" Maximum="100" Margin="5" Height="20" Width="250" HorizontalAlignment="Left"/>
+            <WrapPanel Grid.Row="0" Grid.Column="0" Margin="10,0">
+                <Image x:Name="heart1" Source="images/heart.png" VerticalAlignment="Top" Height="30" Width="30"></Image>
+                <Image x:Name="heart2" Source="images/heart.png" VerticalAlignment="Top" Height="30" Width="30"></Image>
+                <Image x:Name="heart3" Source="images/heart.png" VerticalAlignment="Top" Height="30" Width="30"></Image>
+                <Image x:Name="heart4" Source="images/heart.png" VerticalAlignment="Top" Height="30" Width="30"></Image>
+                <Image x:Name="heart5" Source="images/heart.png" VerticalAlignment="Top" Height="30" Width="30"></Image>
+            </WrapPanel>
+        </StackPanel>
+
+        <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Width="250" Height="50" FlowDirection="RightToLeft" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Image x:Name="userImg" Source="images/user.png" Height="50" Width="50"></Image>
+            <TextBlock TextWrapping="Wrap" Text="User Name" Width="140" Height="30" VerticalAlignment="Center" />
+            <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0">
+                <TextBlock TextWrapping="Wrap" Text="20" Width="Auto" Height="30" VerticalAlignment="Center" />
+                <TextBlock TextWrapping="Wrap" Text="$" Width="Auto" Height="30" VerticalAlignment="Center" />
+            </WrapPanel>
+        </WrapPanel>
+        <!--<Image x:Name="heart2" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="3" Source="images/heart.png" Margin="-184,55,-172,0"></Image>
+        <Image x:Name="heart3" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="3" Source="images/heart.png" Margin="-184,55,-172,0"></Image>
+        <Image x:Name="heart4" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="3" Source="images/heart.png" Margin="-184,55,-172,0"></Image>
+        <Image x:Name="heart5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="3" Source="images/heart.png" Margin="-184,55,-172,0"></Image>-->
+        <Image x:Name="suolKey" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="3" Source="images/question.png" Margin="-205,64,-199,0"/>
+        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="4" Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="300" Height="100" TextWrapping="Wrap" Text="Imagine there's no heaven..Imagine there's......" TextAlignment="Center" VerticalAlignment="Center" Padding="5" Margin="36,4,46,37"/>
+        <Image x:Name="image" Width="40" Height="40" Source="images/suolKey.png" Grid.Column="1" Margin="162,78,190,32" Grid.RowSpan="2"/>
 
         <!--right Column-->
         <!--<TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="3" Grid.Column="2" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Tag="First Name" VerticalAlignment="Center" />-->
         <!--left Column-->
         <!--<TextBlock HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="200" TextWrapping="Wrap" Text="First Name:" VerticalAlignment="Center" />-->
         <!--submit button-->
-        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="5"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
-        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="7"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
-        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="9"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
-        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="11"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
+        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="6"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
+        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="8"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
+        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="10"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
+        <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="12"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
 
-        <Button x:Name="remez1" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="5" Margin="24,10,56,6" Grid.RowSpan="2">
+        <Button x:Name="remez1" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="6" Margin="24,10,56,6" Grid.RowSpan="2">
             <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="Purple" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
 
-        <Button x:Name="remez2" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="7" Margin="24,10,56,6" Grid.RowSpan="2">
+        <Button x:Name="remez2" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="8" Margin="24,10,56,6" Grid.RowSpan="2">
             <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="Blue" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
 
-        <Button x:Name="remez3" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="9" Margin="24,10,56,6" Grid.RowSpan="2">
+        <Button x:Name="remez3" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="10" Margin="24,10,56,6" Grid.RowSpan="2">
             <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="Orange" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
