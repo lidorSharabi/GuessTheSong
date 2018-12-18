@@ -162,7 +162,7 @@
         <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="12"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
 
         <Button x:Name="remez1" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="6" Margin="24,10,56,6" Grid.RowSpan="2">
-            <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="Purple" BorderThickness="4,4,4,4" >
+            <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="MediumPurple" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
