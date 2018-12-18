@@ -168,7 +168,7 @@
         </Button>
 
         <Button x:Name="remez2" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="8" Margin="24,10,56,6" Grid.RowSpan="2">
-            <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="Blue" BorderThickness="4,4,4,4" >
+            <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="red" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
