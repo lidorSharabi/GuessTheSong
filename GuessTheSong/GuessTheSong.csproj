@@ -121,5 +121,11 @@
   <ItemGroup>
     <Resource Include="images\dollar.PNG" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GuessTheSongServer\GuessTheSongServer.csproj">
+      <Project>{04c0889a-0531-4192-873f-a6059515b349}</Project>
+      <Name>GuessTheSongServer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

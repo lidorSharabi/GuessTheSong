@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data;
 
 namespace GuessTheSongServer
 {
@@ -12,6 +13,7 @@ namespace GuessTheSongServer
         public void GetBandImage(string bandNamed)
         {
             //TODO - return the band image
+
         }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GuessTheSongServer.DB;
 
 namespace GuessTheSong
 {
@@ -32,6 +33,9 @@ namespace GuessTheSong
             multiPlayer.Owner = this;
             multiPlayer.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             multiPlayer.ShowDialog();
+            //DataBaseHandler dbHandler = new DataBaseHandler();
+            //dbHandler.tryToConnect();
         }
+
     }
 }
