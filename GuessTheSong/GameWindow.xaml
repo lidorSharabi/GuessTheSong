@@ -125,7 +125,7 @@
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <ProgressBar  Grid.ColumnSpan="2" Value="70" Maximum="100" Margin="5" Height="20" Width="250" HorizontalAlignment="Left"/>
+            <ProgressBar x:Name="ProgressBar" Grid.ColumnSpan="2" Value="{Binding Path=LeftSeconds}" Maximum="{Binding Path=MaximumSeconds}" Margin="5" Height="20" Width="250" HorizontalAlignment="Left"/>
             <WrapPanel Grid.Row="0" Grid.Column="0" Margin="10,0">
                 <Image x:Name="heart1" Source="images/heart.png" VerticalAlignment="Top" Height="30" Width="30"></Image>
                 <Image x:Name="heart2" Source="images/heart.png" VerticalAlignment="Top" Height="30" Width="30"></Image>
@@ -161,20 +161,20 @@
         <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="10"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
         <Button Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="12"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
 
-        <Button x:Name="remez1" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="6" Margin="24,10,56,6" Grid.RowSpan="2">
-            <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="MediumPurple" BorderThickness="4,4,4,4" >
+        <Button x:Name="remez1_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="6" Margin="24,10,56,6" Grid.RowSpan="2" Click="Remez1_Click">
+            <Border x:Name="remez1_brd" CornerRadius="25" Height="50" Width="50" Margin="0" Background="MediumPurple" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
 
-        <Button x:Name="remez2" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="8" Margin="24,10,56,6" Grid.RowSpan="2">
-            <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="red" BorderThickness="4,4,4,4" >
+        <Button x:Name="remez2_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="8" Margin="24,10,56,6" Grid.RowSpan="2" Click="Remez2_Click">
+            <Border x:Name="remez2_brd" CornerRadius="25" Height="50" Width="50" Margin="0" Background="red" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
 
-        <Button x:Name="remez3" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="10" Margin="24,10,56,6" Grid.RowSpan="2">
-            <Border CornerRadius="25" Height="50" Width="50" Margin="0" Background="Orange" BorderThickness="4,4,4,4" >
+        <Button x:Name="remez3_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="10" Margin="24,10,56,6" Grid.RowSpan="2"  Click="Remez3_Click">
+            <Border x:Name="remez3_brd" CornerRadius="25" Height="50" Width="50" Margin="0" Background="Orange" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>

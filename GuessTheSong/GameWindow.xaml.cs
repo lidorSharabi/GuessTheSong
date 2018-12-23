@@ -39,5 +39,22 @@ namespace GuessTheSong
         {
             //this.pb.Value = System.DateTime.Now.Second % 100;
         }
+
+        private void Remez1_Click(object sender, RoutedEventArgs e)
+        {
+            remez1_btn.IsEnabled = false;
+            remez1_brd.Background = new SolidColorBrush(Colors.Gray);
+            //remez1_btn.TextBlock.
+        }
+        private void Remez2_Click(object sender, RoutedEventArgs e)
+        {
+            remez2_btn.IsEnabled = false;
+            remez2_brd.Background = new SolidColorBrush(Colors.Gray);
+        }
+        private void Remez3_Click(object sender, RoutedEventArgs e)
+        {
+            remez3_btn.IsEnabled = false;
+            remez3_brd.Background = new SolidColorBrush(Colors.Gray);
+        }
     }
 }
