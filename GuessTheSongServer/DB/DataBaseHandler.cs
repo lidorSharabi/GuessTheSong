@@ -10,7 +10,9 @@ namespace GuessTheSongServer.DB
 {
     public class DataBaseHandler
     {
-        static private DBConnection DBConnection;
+        //static private DBConnection DBConnection;
+        public DBConnection DBConnection;
+        public enum QueryType {SELECT, UPDATE, INSERT};
 
         public DataBaseHandler()
         {
@@ -25,6 +27,31 @@ namespace GuessTheSongServer.DB
         {
             DBConnection.Close();
         }
+
+
+        public MySqlDataReader RunQuery(MySqlCommand command, QueryType type)
+        {
+            if (DBConnection.IsConnect())
+            {
+                if (type == QueryType.INSERT)
+                {
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch(Exception ex)
+                    {
+                        System.IO.File.WriteAllText(@"C:\Users\User\source\repos\lidorSharabi\GuessTheSong\GuessTheSongServer\Log\error.log.txt", ex.Message);
+                    }
+                }
+                DBConnection.Close();
+                return null;
+            }
+            return null;
+        }
+
+       
+        
 
         public void tryToConnect()
         {

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GuessTheSongServer.DB;
+//using DateTime;
+//using GuessTheSongServer.DB.DataBaseHandler;
 
 namespace GuessTheSong
 {
@@ -28,13 +30,18 @@ namespace GuessTheSong
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            DateTime? selectedDate = DateOfBirth.SelectedDate;
+            string firstName = FirstNameUI.Text;
+            string lastName = LastNameUI.Text;
+            string genre = GenreUI.Text;
+            string artist = ArtistUI.Text; ;
+            DBActions.SaveUserData(firstName, lastName, selectedDate, genre, artist);  
+ 
             GameWindow multiPlayer = new GameWindow();
             this.Visibility = Visibility.Hidden;
             multiPlayer.Owner = this;
             multiPlayer.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             multiPlayer.ShowDialog();
-            //DataBaseHandler dbHandler = new DataBaseHandler();
-            //dbHandler.tryToConnect();
         }
 
     }

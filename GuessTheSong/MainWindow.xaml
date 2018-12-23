@@ -79,11 +79,11 @@
         <Image x:Name="image" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Source="images/GuessTheSong.png" Margin="10"></Image>
 
         <!--right Column-->
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="3" Grid.Column="2" Width="200" TextWrapping="Wrap" Tag="First Name" VerticalAlignment="Center" />
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="5" Grid.Column="2" Width="200" TextWrapping="Wrap" Tag="Last Name" VerticalAlignment="Center" />
-        <DatePicker HorizontalAlignment="Left"  Grid.Row="7" Grid.Column="2" Width="200"  VerticalAlignment="Center" SelectedDate="1/1/90"/>
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Tag="Select.." Grid.Row="9" Grid.Column="2" Width="200" TextWrapping="Wrap"  VerticalAlignment="Center" />
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Tag="Search.." Grid.Row="11" Grid.Column="2" Width="200" TextWrapping="Wrap"  VerticalAlignment="Center" />
+        <TextBox Name="FirstNameUI" HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="3" Grid.Column="2" Width="200" TextWrapping="Wrap" Tag="First Name" VerticalAlignment="Center" />
+        <TextBox Name="LastNameUI" HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Grid.Row="5" Grid.Column="2" Width="200" TextWrapping="Wrap" Tag="Last Name" VerticalAlignment="Center" />
+        <DatePicker Name="DateOfBirth" HorizontalAlignment="Left"  Grid.Row="7" Grid.Column="2" Width="200"  VerticalAlignment="Center" SelectedDate="1/1/90"/>
+        <TextBox Name="GenreUI" HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Tag="Select.." Grid.Row="9" Grid.Column="2" Width="200" TextWrapping="Wrap"  VerticalAlignment="Bottom" Margin="0,0,0,5" />
+        <TextBox Name="ArtistUI" HorizontalAlignment="Left" Style="{StaticResource placeHolder}" Tag="Search.." Grid.Row="11" Grid.Column="2" Width="200" TextWrapping="Wrap"  VerticalAlignment="Center" />
         <!--left Column-->
         <TextBlock HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Width="200" TextWrapping="Wrap" Text="First Name:" VerticalAlignment="Center" />
         <TextBlock HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Width="200" TextWrapping="Wrap" Text="Last Name:" VerticalAlignment="Center" />
