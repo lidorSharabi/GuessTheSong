@@ -10,8 +10,7 @@ namespace GuessTheSongServer.DB
 {
     public class DataBaseHandler
     {
-        //static private DBConnection DBConnection;
-        public DBConnection DBConnection;
+        static private DBConnection DBConnection;
         public enum QueryType {SELECT, UPDATE, INSERT};
 
         public DataBaseHandler()
@@ -41,7 +40,7 @@ namespace GuessTheSongServer.DB
                     }
                     catch(Exception ex)
                     {
-                        System.IO.File.WriteAllText(@"C:\Users\User\source\repos\lidorSharabi\GuessTheSong\GuessTheSongServer\Log\error.log.txt", ex.Message);
+                        //System.IO.File.WriteAllText(@"C:\Users\User\source\repos\lidorSharabi\GuessTheSong\GuessTheSongServer\Log\error.log.txt", ex.Message);
                     }
                 }
                 DBConnection.Close();
@@ -50,8 +49,21 @@ namespace GuessTheSongServer.DB
             return null;
         }
 
-       
-        
+        public void SaveUserData(string firstName, string lastName, DateTime? dateOfBirth, string genre, string artist)
+        {
+            string query = "INSERT INTO users (FirstName, LastName, DateOfBirth, Genre, Artist)" +
+                " Values(@firstName, @lastName, @dateOfBirth, @genre, @artist)";
+            
+            MySqlCommand command = new MySqlCommand(query, DBConnection.Connection);
+            command.Parameters.AddWithValue("@firstName", firstName);
+            command.Parameters.AddWithValue("@lastName", lastName);
+            command.Parameters.AddWithValue("@dateOfBirth", dateOfBirth);
+            command.Parameters.AddWithValue("@genre", genre);
+            command.Parameters.AddWithValue("@artist", artist);
+
+            RunQuery(command, DataBaseHandler.QueryType.INSERT);
+        }
+
 
         public void tryToConnect()
         {
