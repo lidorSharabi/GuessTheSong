@@ -51,8 +51,10 @@ namespace GuessTheSongServer.DB
 
         public void SaveUserData(string firstName, string lastName, DateTime? dateOfBirth, string genre, string artist)
         {
-            string query = "INSERT INTO users (FirstName, LastName, DateOfBirth, Genre, Artist)" +
-                " Values(@firstName, @lastName, @dateOfBirth, @genre, @artist)";
+            int score = 0;
+            DateTime? lastModified = DateTime.Now;
+            string query = "INSERT INTO users (FirstName, LastName, DateOfBirth, Genre, Artist, Score, LastModified)" +
+                " Values(@firstName, @lastName, @dateOfBirth, @genre, @artist, @score, @lastModified)";
             
             MySqlCommand command = new MySqlCommand(query, DBConnection.Connection);
             command.Parameters.AddWithValue("@firstName", firstName);
@@ -60,6 +62,8 @@ namespace GuessTheSongServer.DB
             command.Parameters.AddWithValue("@dateOfBirth", dateOfBirth);
             command.Parameters.AddWithValue("@genre", genre);
             command.Parameters.AddWithValue("@artist", artist);
+            command.Parameters.AddWithValue("@score", score);
+            command.Parameters.AddWithValue("@lastModified", lastModified);
 
             RunQuery(command, DataBaseHandler.QueryType.INSERT);
         }
