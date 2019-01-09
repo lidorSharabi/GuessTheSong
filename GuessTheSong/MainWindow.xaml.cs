@@ -31,11 +31,13 @@ namespace GuessTheSong
             DateTime? selectedDate = DateOfBirth.SelectedDate;
             string firstName = FirstNameUI.Text;
             string lastName = LastNameUI.Text;
-            string genre = GenreUI.Text;
-            string artist = ArtistUI.Text; ;
+            //string genre = GenreUI.Text;
+            int genreID = 5;
+            //string artist = ArtistUI.Text; ;
+            int artistID = 6;
             
             DataBaseHandler dbHandler = new DataBaseHandler();
-            dbHandler.SaveUserData(firstName, lastName, selectedDate, genre, artist);
+            dbHandler.SaveUserData(firstName, lastName, selectedDate, genreID, artistID);
             GameWindow multiPlayer = new GameWindow();
             this.Visibility = Visibility.Hidden;
             multiPlayer.Owner = this;

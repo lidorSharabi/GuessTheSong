@@ -49,7 +49,7 @@ namespace GuessTheSongServer.DB
             return null;
         }
 
-        public void SaveUserData(string firstName, string lastName, DateTime? dateOfBirth, string genre, string artist)
+        public void SaveUserData(string firstName, string lastName, DateTime? dateOfBirth, int genreID, int artistID)
         {
             int score = 0;
             DateTime? lastModified = DateTime.Now;
@@ -60,8 +60,8 @@ namespace GuessTheSongServer.DB
             command.Parameters.AddWithValue("@firstName", firstName);
             command.Parameters.AddWithValue("@lastName", lastName);
             command.Parameters.AddWithValue("@dateOfBirth", dateOfBirth);
-            command.Parameters.AddWithValue("@genre", genre);
-            command.Parameters.AddWithValue("@artist", artist);
+            command.Parameters.AddWithValue("@genre", genreID);
+            command.Parameters.AddWithValue("@artist", artistID);
             command.Parameters.AddWithValue("@score", score);
             command.Parameters.AddWithValue("@lastModified", lastModified);
 
