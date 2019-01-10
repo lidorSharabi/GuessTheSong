@@ -26,6 +26,17 @@ namespace GuessTheSong
         public MainWindow()
         {
             InitializeComponent();
+            autoComGenre.LostFocus += (sender, e) =>
+            {
+                var border = (autoComGenreResultStack.Parent as ScrollViewer).Parent as Border;
+                border.Visibility = System.Windows.Visibility.Collapsed;
+            };
+            autoComArtist.LostFocus += (sender, e) =>
+            {
+                var border = (autoComArtistResultStack.Parent as ScrollViewer).Parent as Border;
+                border.Visibility = System.Windows.Visibility.Collapsed;
+
+            };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,10 +44,10 @@ namespace GuessTheSong
             DateTime? selectedDate = DateOfBirth.SelectedDate;
             string firstName = FirstNameUI.Text;
             string lastName = LastNameUI.Text;
-            string genre = GenreUI.Text;
-            string artist = ArtistUI.Text; ;
-            DBActions.SaveUserData(firstName, lastName, selectedDate, genre, artist);  
- 
+            string genre = autoComGenre.Text;
+            string artist = autoComArtist.Text; ;
+            DBActions.SaveUserData(firstName, lastName, selectedDate, genre, artist);
+
             GameWindow multiPlayer = new GameWindow();
             this.Visibility = Visibility.Hidden;
             multiPlayer.Owner = this;
@@ -44,5 +55,123 @@ namespace GuessTheSong
             multiPlayer.ShowDialog();
         }
 
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            bool found = false;
+            string autoComName = (sender as TextBox).Name;
+            StackPanel resultStack;
+            resultStack = autoComArtistResultStack;
+            if (autoComName.Equals("autoComArtist"))
+            {
+                resultStack = autoComArtistResultStack;
+            }
+            else if (autoComName.Equals("autoComGenre"))
+            {
+                resultStack = autoComGenreResultStack;
+            }
+            var border = (resultStack.Parent as ScrollViewer).Parent as Border;
+
+            var data = Model.GetData();
+
+            string query = (sender as TextBox).Text;
+
+            if (query.Length == 0)
+            {
+                // Clear   
+                resultStack.Children.Clear();
+                border.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                border.Visibility = System.Windows.Visibility.Visible;
+            }
+
+            // Clear the list   
+            resultStack.Children.Clear();
+
+            // Add the result   
+            foreach (var obj in data)
+            {
+                if (obj.ToLower().StartsWith(query.ToLower()))
+                {
+                    // The word starts with this... Autocomplete must work   
+                    addItem(obj, autoComName, border, resultStack);
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                resultStack.Children.Add(new TextBlock() { Text = "No results found." });
+            }
+        }
+
+        private void addItem(string text, string autoComName, Border border, StackPanel resultStack)
+        {
+            TextBlock block = new TextBlock();
+
+            // Add the text   
+            block.Text = text;
+
+            // A little style...   
+            block.Margin = new Thickness(2, 3, 2, 3);
+            block.Cursor = Cursors.Hand;
+
+            // Mouse events   
+            block.MouseLeftButtonUp += (sender, e) =>
+            {
+                if (autoComName.Equals("autoComArtist"))
+                {
+                    autoComArtist.Text = (sender as TextBlock).Text;
+                }
+                else if (autoComName.Equals("autoComGenre"))
+                {
+                    autoComGenre.Text = (sender as TextBlock).Text;
+                }
+                border.Visibility = System.Windows.Visibility.Collapsed;
+            };
+
+            block.MouseEnter += (sender, e) =>
+            {
+                TextBlock b = sender as TextBlock;
+                b.Background = Brushes.PeachPuff;
+            };
+
+            block.MouseLeave += (sender, e) =>
+            {
+                TextBlock b = sender as TextBlock;
+                b.Background = Brushes.Transparent;
+            };
+
+
+            // Add to the panel   
+            resultStack.Children.Add(block);
+        }
+
+        class Model
+        {
+            static public List<string> GetData()
+            {
+                List<string> data = new List<string>();
+
+                data.Add("Afzaal");
+                data.Add("Ahmad");
+                data.Add("Zeeshan");
+                data.Add("Daniyal");
+                data.Add("Rizwan");
+                data.Add("John");
+                data.Add("Doe");
+                data.Add("Johanna Doe");
+                data.Add("Pakistan");
+                data.Add("Microsoft");
+                data.Add("Programming");
+                data.Add("Visual Studio");
+                data.Add("Sofiya");
+                data.Add("Rihanna");
+                data.Add("Eminem");
+
+                return data;
+            }
+        }
     }
 }
