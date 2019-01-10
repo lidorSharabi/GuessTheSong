@@ -13,8 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GuessTheSongServer.DB;
-//using DateTime;
-//using GuessTheSongServer.DB.DataBaseHandler;
 
 namespace GuessTheSong
 {
@@ -44,6 +42,13 @@ namespace GuessTheSong
             DateTime? selectedDate = DateOfBirth.SelectedDate;
             string firstName = FirstNameUI.Text;
             string lastName = LastNameUI.Text;
+            //string genre = GenreUI.Text;
+            int genreID = 5;
+            //string artist = ArtistUI.Text; ;
+            int artistID = 6;
+            
+            DataBaseHandler dbHandler = new DataBaseHandler();
+            dbHandler.SaveUserData(firstName, lastName, selectedDate, genreID, artistID);
             string genre = autoComGenre.Text;
             string artist = autoComArtist.Text; ;
             DBActions.SaveUserData(firstName, lastName, selectedDate, genre, artist);
