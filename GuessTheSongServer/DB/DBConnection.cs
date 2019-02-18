@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Configuration;  
 
 namespace GuessTheSongServer.DB
 {
@@ -14,6 +15,10 @@ namespace GuessTheSongServer.DB
         {
         }
 
+        public string Password { get; set; }
+        public string User { get; set; }
+        public string Server { get; set; }
+        
         private string databaseName = string.Empty;
         public string DatabaseName
         {
@@ -21,7 +26,6 @@ namespace GuessTheSongServer.DB
             set { databaseName = value; }
         }
 
-        public string Password { get; set; }
         private MySqlConnection connection = null;
         public MySqlConnection Connection
         {
@@ -42,7 +46,7 @@ namespace GuessTheSongServer.DB
             {
                 if (String.IsNullOrEmpty(databaseName))
                     return false;
-                string connstring = string.Format("Server=localhost; database={0}; UID=UserName; password=your password", databaseName);
+                string connstring = string.Format("Server={0}; database={1}; UID={2}; password={3}",Server, DatabaseName, User, Password);
                 connection = new MySqlConnection(connstring);
                 connection.Open();
             }
@@ -56,7 +60,7 @@ namespace GuessTheSongServer.DB
             {
                 if (String.IsNullOrEmpty(databaseName))
                     return false;
-                string connstring = string.Format("Server=127.0.0.1; database={0}; UID=root; password=123456", databaseName);
+                string connstring = string.Format("Server={0}; database={1}; UID={2}; password={3}", Server, DatabaseName, User, Password);
                 connection = new MySqlConnection(connstring);
                 connection.Open();
             }

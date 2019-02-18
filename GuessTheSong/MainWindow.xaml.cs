@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GuessTheSongServer.DB;
+using GuessTheSongServer.DM;
+using System.Configuration;
 
 namespace GuessTheSong
 {
@@ -21,9 +23,25 @@ namespace GuessTheSong
     /// </summary>
     public partial class MainWindow : Window
     {
+        DataBaseHandler dbHandler;
+        List<Artist> artistsList;
+        List<Genre> genresList;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            string DatabaseName = ConfigurationManager.AppSettings["DatabaseName"];
+            string Password = ConfigurationManager.AppSettings["Password"];
+            string Server = ConfigurationManager.AppSettings["Server"];
+            string User = ConfigurationManager.AppSettings["User"];
+
+            dbHandler = new DataBaseHandler(Server, DatabaseName, Password, User);
+
+            artistsList = dbHandler.GetArtists();
+
+            genresList = dbHandler.GetGenres();
+
             autoComGenre.LostFocus += (sender, e) =>
             {
                 var border = (autoComGenreResultStack.Parent as ScrollViewer).Parent as Border;
@@ -46,12 +64,11 @@ namespace GuessTheSong
             int genreID = 5;
             //string artist = ArtistUI.Text; ;
             int artistID = 6;
-            
-            DataBaseHandler dbHandler = new DataBaseHandler();
+
             dbHandler.SaveUserData(firstName, lastName, selectedDate, genreID, artistID);
             string genre = autoComGenre.Text;
             string artist = autoComArtist.Text; ;
-            DBActions.SaveUserData(firstName, lastName, selectedDate, genre, artist);
+            //DBActions.SaveUserData(firstName, lastName, selectedDate, genre, artist);
 
             GameWindow multiPlayer = new GameWindow();
             this.Visibility = Visibility.Hidden;
@@ -63,20 +80,23 @@ namespace GuessTheSong
         private void TextBox_KeyUp(object sender, KeyEventArgs e)
         {
             bool found = false;
+            var data = new List<string>();
             string autoComName = (sender as TextBox).Name;
             StackPanel resultStack;
             resultStack = autoComArtistResultStack;
             if (autoComName.Equals("autoComArtist"))
             {
                 resultStack = autoComArtistResultStack;
+                artistsList.ForEach((item) => data.Add(item.Desc));
             }
             else if (autoComName.Equals("autoComGenre"))
             {
                 resultStack = autoComGenreResultStack;
+                genresList.ForEach((item) => data.Add(item.Desc));
             }
             var border = (resultStack.Parent as ScrollViewer).Parent as Border;
 
-            var data = Model.GetData();
+            //var data = Model.GetData();
 
             string query = (sender as TextBox).Text;
 
