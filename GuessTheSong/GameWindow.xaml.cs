@@ -21,13 +21,47 @@ namespace GuessTheSong
     public partial class GameWindow : Window
     {
         private DispatcherTimer timer;
+        private TimeSpan time;
+        private int lives;
         public GameWindow()
         {
             InitializeComponent();
-            this.timer = new DispatcherTimer();
-            this.timer.Tick += timer_Tick;
-            this.timer.Interval = new System.TimeSpan(0, 0, 1);
+            StartTimer();
+            this.lives = 5;
+
+            //var webImage = new BitmapImage(new Uri("../images/heart.png", UriKind.Relative));
+            //var imageControl = new Image();
+            //imageControl.Source = webImage;
+            //panel.Children.Add(imageControl);
+           
+        }
+
+        private void StartTimer()
+        {
+            this.time = TimeSpan.FromSeconds(30);
+            this.timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+            {
+                CountDown.Text = this.time.Seconds.ToString();
+                ProgressBar.Value = this.time.Seconds;
+                if (this.time == TimeSpan.Zero)
+                {
+                    this.timer.Stop();
+                    TimeIsUp();
+                }
+                this.time = this.time.Add(TimeSpan.FromSeconds(-1));
+            }, Application.Current.Dispatcher);
             this.timer.Start();
+        }
+
+        private void TimeIsUp()
+        {
+            if(this.lives == 0)
+            {
+                //TODO- GAME OVER
+                return;
+            }
+            panel.Children.RemoveAt(5 - this.lives);
+            this.lives--;  
         }
 
         private void Choose_Answer(object sender, RoutedEventArgs e)
