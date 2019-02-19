@@ -75,7 +75,7 @@ namespace GuessTheSongServer.DB
         public List<Genre> GetGenres()
         {
             List<Genre> res = new List<Genre>();
-            DBConnection.Start();
+            //DBConnection.Start();
             if (DBConnection.IsConnect())
             {
                 //id = 1 is 'Not Available'
@@ -86,7 +86,7 @@ namespace GuessTheSongServer.DB
                 {
                     res.Add(new Genre() { Id = Int32.Parse(reader.GetString(0)), Desc = reader.GetString(1) });
                 }
-                DBConnection.Close();
+                reader.Close();
             }
             return res;
         }
@@ -94,7 +94,7 @@ namespace GuessTheSongServer.DB
         public List<Artist> GetArtists()
         {
             List<Artist> res = new List<Artist>();
-            DBConnection.Start();
+            //DBConnection.Start();
             if (DBConnection.IsConnect())
             {
                 string query = "SELECT t.id, t.filteredName FROM artists t";
@@ -104,7 +104,7 @@ namespace GuessTheSongServer.DB
                 {
                     res.Add(new Artist() { Id = Int32.Parse(reader.GetString(0)), Desc = reader.GetString(1) });
                 }
-                DBConnection.Close();
+                reader.Close();
             }
             return res;
         }
