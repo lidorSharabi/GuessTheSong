@@ -23,22 +23,20 @@ namespace GuessTheSong
         private DispatcherTimer timer;
         private TimeSpan time;
         private int lives;
+        private int level;
+        private int levelTime;
         public GameWindow()
         {
             InitializeComponent();
-            StartTimer();
             this.lives = 5;
-
-            //var webImage = new BitmapImage(new Uri("../images/heart.png", UriKind.Relative));
-            //var imageControl = new Image();
-            //imageControl.Source = webImage;
-            //panel.Children.Add(imageControl);
-           
+            this.level = 1;
+            this.levelTime = 30;
+            StartTimer();
         }
 
         private void StartTimer()
         {
-            this.time = TimeSpan.FromSeconds(30);
+            this.time = TimeSpan.FromSeconds(this.levelTime);
             this.timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
             {
                 CountDown.Text = this.time.Seconds.ToString();
@@ -60,10 +58,31 @@ namespace GuessTheSong
                 //TODO- GAME OVER
                 return;
             }
-            panel.Children.RemoveAt(5 - this.lives);
-            this.lives--;  
+            panel.Children.RemoveAt(0);
+            this.lives--;
+            //TODO - LOSS SCREEN
+            EndLevel();
+            if(this.lives > 0)
+            {
+                StartNewLevel();
+            }            
         }
 
+        private void EndLevel()
+        {
+            this.level++;
+            if (this.levelTime > 10)
+            {
+                this.levelTime = this.levelTime - 5;
+            }
+        }
+
+        private void StartNewLevel()
+        {
+            //TODO - new query and answers
+
+            StartTimer();
+        }
         private void Choose_Answer(object sender, RoutedEventArgs e)
         {
             string answer = ((Button)sender).Content.ToString();
