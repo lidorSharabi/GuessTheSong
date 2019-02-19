@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using GuessTheSongServer.DB;
 using GuessTheSongServer.DM;
 using System.Configuration;
+using System.ComponentModel;
 
 namespace GuessTheSong
 {
@@ -24,8 +25,6 @@ namespace GuessTheSong
     public partial class MainWindow : Window
     {
         DataBaseHandler dbHandler;
-        List<Artist> artistsList;
-        List<Genre> genresList;
 
         public MainWindow()
         {
@@ -37,38 +36,35 @@ namespace GuessTheSong
             string User = ConfigurationManager.AppSettings["User"];
 
             dbHandler = new DataBaseHandler(Server, DatabaseName, Password, User);
-
-            artistsList = dbHandler.GetArtists();
-
-            genresList = dbHandler.GetGenres();
-
-            autoComGenre.LostFocus += (sender, e) =>
-            {
-                var border = (autoComGenreResultStack.Parent as ScrollViewer).Parent as Border;
-                border.Visibility = System.Windows.Visibility.Collapsed;
-            };
-            autoComArtist.LostFocus += (sender, e) =>
-            {
-                var border = (autoComArtistResultStack.Parent as ScrollViewer).Parent as Border;
-                border.Visibility = System.Windows.Visibility.Collapsed;
-
-            };
+            List<Artist> artistsList = dbHandler.GetArtists();
+            List<Genre> genresList = dbHandler.GetGenres();
+            MainWindowVM vm = new MainWindowVM(artistsList, genresList);
+            DataContext = vm;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void ComboBoxSelection_artist(object sender, RoutedEventArgs e)
+        {
+            ComboBox cmb = sender as ComboBox;
+            ((MainWindowVM)DataContext).SelectedArtist = Int32.Parse(cmb.SelectedValue.ToString());
+
+        }
+
+        private void ComboBoxSelection_genre(object sender, RoutedEventArgs e)
+        {
+            ComboBox cmb = sender as ComboBox;
+            ((MainWindowVM)DataContext).SelectedGenre = Int32.Parse(cmb.SelectedValue.ToString());
+        }
+
+        private void Submit_btn(object sender, RoutedEventArgs e)
         {
             DateTime? selectedDate = DateOfBirth.SelectedDate;
             string firstName = FirstNameUI.Text;
             string lastName = LastNameUI.Text;
-            //string genre = GenreUI.Text;
-            int genreID = 5;
-            //string artist = ArtistUI.Text; ;
-            int artistID = 6;
+            int genreID = ((MainWindowVM)DataContext).SelectedGenre;
+            int artistID = ((MainWindowVM)DataContext).SelectedArtist;
 
             dbHandler.SaveUserData(firstName, lastName, selectedDate, genreID, artistID);
-            string genre = autoComGenre.Text;
-            string artist = autoComArtist.Text; ;
-            //DBActions.SaveUserData(firstName, lastName, selectedDate, genre, artist);
 
             GameWindow multiPlayer = new GameWindow();
             this.Visibility = Visibility.Hidden;
@@ -76,127 +72,85 @@ namespace GuessTheSong
             multiPlayer.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             multiPlayer.ShowDialog();
         }
+    }
 
-        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+    public class ArtistVM
+    {
+        public string Desc { get; set; }
+        public int Id { get; set; }
+
+        public ArtistVM() { }
+
+        public ArtistVM(Artist artist)
         {
-            bool found = false;
-            var data = new List<string>();
-            string autoComName = (sender as TextBox).Name;
-            StackPanel resultStack;
-            resultStack = autoComArtistResultStack;
-            if (autoComName.Equals("autoComArtist"))
-            {
-                resultStack = autoComArtistResultStack;
-                artistsList.ForEach((item) => data.Add(item.Desc));
-            }
-            else if (autoComName.Equals("autoComGenre"))
-            {
-                resultStack = autoComGenreResultStack;
-                genresList.ForEach((item) => data.Add(item.Desc));
-            }
-            var border = (resultStack.Parent as ScrollViewer).Parent as Border;
-
-            //var data = Model.GetData();
-
-            string query = (sender as TextBox).Text;
-
-            if (query.Length == 0)
-            {
-                // Clear   
-                resultStack.Children.Clear();
-                border.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
-                border.Visibility = System.Windows.Visibility.Visible;
-            }
-
-            // Clear the list   
-            resultStack.Children.Clear();
-
-            // Add the result   
-            foreach (var obj in data)
-            {
-                if (obj.ToLower().StartsWith(query.ToLower()))
-                {
-                    // The word starts with this... Autocomplete must work   
-                    addItem(obj, autoComName, border, resultStack);
-                    found = true;
-                }
-            }
-
-            if (!found)
-            {
-                resultStack.Children.Add(new TextBlock() { Text = "No results found." });
-            }
+            Desc = artist.Desc;
+            Id = artist.Id;
         }
 
-        private void addItem(string text, string autoComName, Border border, StackPanel resultStack)
+        public override string ToString()
         {
-            TextBlock block = new TextBlock();
-
-            // Add the text   
-            block.Text = text;
-
-            // A little style...   
-            block.Margin = new Thickness(2, 3, 2, 3);
-            block.Cursor = Cursors.Hand;
-
-            // Mouse events   
-            block.MouseLeftButtonUp += (sender, e) =>
-            {
-                if (autoComName.Equals("autoComArtist"))
-                {
-                    autoComArtist.Text = (sender as TextBlock).Text;
-                }
-                else if (autoComName.Equals("autoComGenre"))
-                {
-                    autoComGenre.Text = (sender as TextBlock).Text;
-                }
-                border.Visibility = System.Windows.Visibility.Collapsed;
-            };
-
-            block.MouseEnter += (sender, e) =>
-            {
-                TextBlock b = sender as TextBlock;
-                b.Background = Brushes.PeachPuff;
-            };
-
-            block.MouseLeave += (sender, e) =>
-            {
-                TextBlock b = sender as TextBlock;
-                b.Background = Brushes.Transparent;
-            };
-
-
-            // Add to the panel   
-            resultStack.Children.Add(block);
-        }
-
-        class Model
-        {
-            static public List<string> GetData()
-            {
-                List<string> data = new List<string>();
-
-                data.Add("Afzaal");
-                data.Add("Ahmad");
-                data.Add("Zeeshan");
-                data.Add("Daniyal");
-                data.Add("Rizwan");
-                data.Add("John");
-                data.Add("Doe");
-                data.Add("Johanna Doe");
-                data.Add("Pakistan");
-                data.Add("Microsoft");
-                data.Add("Programming");
-                data.Add("Visual Studio");
-                data.Add("Sofiya");
-                data.Add("Rihanna");
-                data.Add("Eminem");
-
-                return data;
-            }
+            return Desc;
         }
     }
+
+    public class GenreVM
+    {
+        public string Desc { get; set; }
+        public int Id { get; set; }
+
+        public GenreVM() { }
+
+        public GenreVM(Genre genre)
+        {
+            Desc = genre.Desc;
+            Id = genre.Id;
+        }
+
+        public override string ToString()
+        {
+            return Desc;
+        }
+    }
+
+    public class MainWindowVM : INotifyPropertyChanged
+    {
+        public MainWindowVM(List<Artist> artistsList, List<Genre> genresList)
+        {
+            IList<ArtistVM> artistVMlist = new List<ArtistVM>();
+            IList<GenreVM> genreVMlist = new List<GenreVM>();
+            foreach (Artist e in artistsList)
+            {
+                artistVMlist.Add(new ArtistVM(e));
+            }
+            foreach (Genre e in genresList)
+            {
+                genreVMlist.Add(new GenreVM(e));
+            }
+            _genresComboBoxLut = new CollectionView(genreVMlist);
+            _artistComboBoxLut = new CollectionView(artistVMlist);
+        }
+
+        private readonly CollectionView _genresComboBoxLut;
+        public CollectionView GenresComboBoxLut
+        {
+            get { return _genresComboBoxLut; }
+        }
+
+        public CollectionView _artistComboBoxLut;
+        public CollectionView ArtistComboBoxLut
+        {
+            get { return _artistComboBoxLut; }
+        }
+
+        public int SelectedGenre { get; set; }
+        public int SelectedArtist { get; set; }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }
+
