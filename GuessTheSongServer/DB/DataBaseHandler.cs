@@ -97,7 +97,7 @@ namespace GuessTheSongServer.DB
             //DBConnection.Start();
             if (DBConnection.IsConnect())
             {
-                string query = "SELECT t.id, t.filteredName FROM artists t";
+                string query = "SELECT t.id, t.artist FROM artists t";
                 var cmd = new MySqlCommand(query, DBConnection.Connection);
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
