@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessTheSongServer.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,14 +28,17 @@ namespace GuessTheSong
         private int level;
         private int levelTime;
         private int score = 0;
-        public GameWindow(string userName)
+        private DataBaseHandler dbHandler;
+        public GameWindow(string userName, DataBaseHandler dbHandler)
         {
             InitializeComponent();
             this.lives = 5;
             this.level = 1;
             this.levelTime = 30;
             UserNameTxtb.Text = userName;
+            ScoreTxtb.Text = this.score.ToString();
             StartTimer();
+            this.dbHandler = dbHandler;
         }
 
         private void StartTimer()
@@ -47,28 +51,32 @@ namespace GuessTheSong
                 if (this.time == TimeSpan.Zero)
                 {
                     this.timer.Stop();
-                    TimeIsUp();
+                    UpdateLives();
+                    if(lives > 0)
+                    {
+                        NextQ();
+                    }
                 }
                 this.time = this.time.Add(TimeSpan.FromSeconds(-1));
             }, Application.Current.Dispatcher);
             this.timer.Start();
         }
 
-        private void TimeIsUp()
+        private void UpdateLives()
         {
+            this.lives--;
+            panel.Children.RemoveAt(0);
             if (this.lives == 0)
             {
-                //TODO- GAME OVER
+               
+                //update score in table
+                this.dbHandler.SaveUserScore(this.score);
+                //open new page - game over + scores
+
+              
+
                 return;
-            }
-            panel.Children.RemoveAt(0);
-            this.lives--;
-            //TODO - LOSS SCREEN
-            EndLevel();
-            if (this.lives > 0)
-            {
-                StartNewLevel();
-            }
+            }                  
         }
 
         private void EndLevel()
@@ -91,19 +99,31 @@ namespace GuessTheSong
             {
                 selectedAnswer.Foreground = new SolidColorBrush(Colors.Green);
                 this.score += 10;
+                this.timer.Stop();
             }
             else
             {
                 //else answer is worng, set text color to red
                 selectedAnswer.Foreground = new SolidColorBrush(Colors.Red);
+                this.timer.Stop();
+                UpdateLives();
+                if (lives == 0)
+                {
+                    return;
+                }
                 //wait for one second and then display next question
             }
             ScoreTxtb.Text = this.score.ToString();
-            await Task.Run(() => NextQ(selectedAnswer));
+            EndLevel();
+            await Task.Run(() => NextQ());
+            //NextQ();
         }
-        internal void NextQ(Button selectedAnswer)
+
+        internal void NextQ()
         {
             Thread.Sleep(1000);
+            StartTimer();
+            //await Task.Run(() => StartTimer());
             Dispatcher.Invoke(new Action(() =>
             {
                 answ1.Foreground = new SolidColorBrush(Colors.Black);
@@ -111,13 +131,14 @@ namespace GuessTheSong
                 answ3.Foreground = new SolidColorBrush(Colors.Black);
                 answ4.Foreground = new SolidColorBrush(Colors.Black);
             }));
+            
         }
-        private void StartNewLevel()
-        {
-            //TODO - new query and answers
+        //private void StartNewLevel()
+        //{
+        //    //TODO - new query and answers
 
-            StartTimer();
-        }
+        //    StartTimer();
+        //}
         private void timer_Tick(object sender, System.EventArgs e)
         {
             //this.pb.Value = System.DateTime.Now.Second % 100;

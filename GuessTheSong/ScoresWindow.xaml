@@ -1,0 +1,33 @@
+﻿<Window x:Class="GuessTheSong.ScoresWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GuessTheSong"
+        mc:Ignorable="d"
+        Title="ScoresWindow" Height="450" Width="800" FontFamily="Comic Sans MS" FontSize="15">
+    <Grid>
+        <Image x:Name="GameOver" Source="images/gameOver.jpg" VerticalAlignment="Top" Height="167" Margin="302,0,214,0"/>
+        <DataGrid AutoGenerateColumns="False" Height="237" Width="350" x:Name="dataGrid1" 
+          VerticalAlignment="Center" Margin="252,172,188,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn CanUserResize="False" CanUserSort="False" IsReadOnly="True" Header=" Name" Binding="{Binding Path=name}" MinWidth="180" >
+                <DataGridTextColumn.HeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="LightCoral"/>
+                            <Setter Property="Height" Value="30"/>
+                        </Style>
+                </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn CanUserResize="False" CanUserSort="False" IsReadOnly="True" Header=" Score" Binding="{Binding Path=score}" MinWidth="145">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="LightCoral"/>
+                            <Setter Property="Height" Value="30"/>
+                        </Style>
+                </DataGridTextColumn.HeaderStyle>
+              </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

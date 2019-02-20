@@ -72,6 +72,35 @@ namespace GuessTheSongServer.DB
             RunQuery(command, DataBaseHandler.QueryType.INSERT);
         }
 
+        public void SaveUserScore(int score)
+        {
+            string query;
+            int id = 1;
+            DBConnection.Start();
+            if (DBConnection.IsConnect())
+            {
+                //check the user id:
+                query = "SELECT users.id FROM guessthesong.users WHERE users.LastModified in " +
+                        "(SELECT max(users.LastModified) FROM users)";
+                var cmd = new MySqlCommand(query, DBConnection.Connection);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    id = Int32.Parse(reader.GetString(0));
+                }
+                reader.Close();
+
+                //update user's score:
+                query = "UPDATE guessthesong.users SET users.Score = @score " +
+                        "WHERE users.id = @id";
+                MySqlCommand command = new MySqlCommand(query, DBConnection.Connection);
+                command.Parameters.AddWithValue("@score", score);
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+            }
+            DBConnection.Close();
+        }
+
         public List<Genre> GetGenres()
         {
             List<Genre> res = new List<Genre>();
