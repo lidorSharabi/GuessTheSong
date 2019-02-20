@@ -139,9 +139,9 @@
 
         <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Width="250" Height="50" FlowDirection="RightToLeft" HorizontalAlignment="Right" VerticalAlignment="Top">
             <Image x:Name="userImg" Source="images/user.png" Height="50" Width="50"></Image>
-            <TextBlock TextWrapping="Wrap" Text="User Name" Width="140" Height="30" VerticalAlignment="Center" />
+            <TextBlock x:Name="UserNameTxtb" TextWrapping="Wrap" Width="140" Height="30" VerticalAlignment="Center" />
             <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0">
-                <TextBlock TextWrapping="Wrap" Text="20" Width="Auto" Height="30" VerticalAlignment="Center" />
+                <TextBlock x:Name="ScoreTxtb" TextWrapping="Wrap" Width="Auto" Height="30" VerticalAlignment="Center" />
                 <TextBlock TextWrapping="Wrap" Text="$" Width="Auto" Height="30" VerticalAlignment="Center" />
             </WrapPanel>
         </WrapPanel>

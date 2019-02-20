@@ -26,12 +26,14 @@ namespace GuessTheSong
         private int lives;
         private int level;
         private int levelTime;
-        public GameWindow()
+        private int score = 0;
+        public GameWindow(string userName)
         {
             InitializeComponent();
             this.lives = 5;
             this.level = 1;
             this.levelTime = 30;
+            UserNameTxtb.Text = userName;
             StartTimer();
         }
 
@@ -54,7 +56,7 @@ namespace GuessTheSong
 
         private void TimeIsUp()
         {
-            if(this.lives == 0)
+            if (this.lives == 0)
             {
                 //TODO- GAME OVER
                 return;
@@ -63,10 +65,10 @@ namespace GuessTheSong
             this.lives--;
             //TODO - LOSS SCREEN
             EndLevel();
-            if(this.lives > 0)
+            if (this.lives > 0)
             {
                 StartNewLevel();
-            }            
+            }
         }
 
         private void EndLevel()
@@ -83,11 +85,20 @@ namespace GuessTheSong
             Button selectedAnswer = ((Button)sender);
             string answer = selectedAnswer.Content.ToString();
             //TODO - check whether the answer is right or worng
+            bool isRight = true;
             //if answer is right, set text color to green
-            selectedAnswer.Foreground = new SolidColorBrush(Colors.Green);
-            //else answer is worng, set text color to red
-            selectedAnswer.Foreground = new SolidColorBrush(Colors.Red);
-            //wait for one second and then display next question
+            if (isRight)
+            {
+                selectedAnswer.Foreground = new SolidColorBrush(Colors.Green);
+                this.score += 10;
+            }
+            else
+            {
+                //else answer is worng, set text color to red
+                selectedAnswer.Foreground = new SolidColorBrush(Colors.Red);
+                //wait for one second and then display next question
+            }
+            ScoreTxtb.Text = this.score.ToString();
             await Task.Run(() => NextQ(selectedAnswer));
         }
         internal void NextQ(Button selectedAnswer)
