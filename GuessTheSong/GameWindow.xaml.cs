@@ -36,7 +36,8 @@ namespace GuessTheSong
             this.level = 1;
             this.levelTime = 30;
             UserNameTxtb.Text = userName;
-            ScoreTxtb.Text = this.score.ToString();
+            this.dbHandler = dbHandler;
+            qm = new QuestionsManager("dreamtheater", "Rock", 2000, dbHandler);
             StartTimer();
             this.dbHandler = dbHandler;
         }
@@ -133,9 +134,10 @@ namespace GuessTheSong
             }));
             
         }
-        //private void StartNewLevel()
-        //{
-        //    //TODO - new query and answers
+        private void StartNewLevel()
+        {
+            //TODO - new query and answers
+            qm.AskQuestion();
 
         //    StartTimer();
         //}
