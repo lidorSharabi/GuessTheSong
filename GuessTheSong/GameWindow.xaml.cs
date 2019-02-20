@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -64,11 +65,29 @@ namespace GuessTheSong
             this.lives--;  
         }
 
-        private void Choose_Answer(object sender, RoutedEventArgs e)
+        private async void Choose_Answer(object sender, RoutedEventArgs e)
         {
-            string answer = ((Button)sender).Content.ToString();
+            Button selectedAnswer = ((Button)sender);
+            string answer = selectedAnswer.Content.ToString();
+            //TODO - check whether the answer is right or worng
+            //if answer is right, set text color to green
+            selectedAnswer.Foreground = new SolidColorBrush(Colors.Green);
+            //else answer is worng, set text color to red
+            selectedAnswer.Foreground = new SolidColorBrush(Colors.Red);
+            //wait for one second and then display next question
+            await Task.Run(() => NextQ(selectedAnswer));
         }
-
+        internal void NextQ(Button selectedAnswer)
+        {
+            Thread.Sleep(1000);
+            Dispatcher.Invoke(new Action(() =>
+            {
+                answ1.Foreground = new SolidColorBrush(Colors.Black);
+                answ2.Foreground = new SolidColorBrush(Colors.Black);
+                answ3.Foreground = new SolidColorBrush(Colors.Black);
+                answ4.Foreground = new SolidColorBrush(Colors.Black);
+            }));
+        }
         private void timer_Tick(object sender, System.EventArgs e)
         {
             //this.pb.Value = System.DateTime.Now.Second % 100;
