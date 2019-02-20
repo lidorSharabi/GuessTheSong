@@ -5,28 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuessTheSong"
         mc:Ignorable="d"
-        Title="ScoresWindow" Height="450" Width="800" FontFamily="Comic Sans MS" FontSize="15">
+        Title="Guess The Song" Height="600" Width="700" FontFamily="Comic Sans MS" FontSize="15">
     <Grid>
-        <Image x:Name="GameOver" Source="images/gameOver.jpg" VerticalAlignment="Top" Height="167" Margin="302,0,214,0"/>
-        <DataGrid AutoGenerateColumns="False" Height="237" Width="350" x:Name="dataGrid1" 
-          VerticalAlignment="Center" Margin="252,172,188,10">
+        <Image x:Name="GameOver" Source="images/gameOver.jpg" VerticalAlignment="Top" Height="275" Margin="239,0,206,0"/>
+        <TextBlock Margin="166,209,377,269" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.524"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>Top 10:</TextBlock>
+        <DataGrid AutoGenerateColumns="False" Height="304" x:Name="dataGrid1" 
+          VerticalAlignment="Center" Margin="164,236,107,29">
             <DataGrid.Columns>
-                <DataGridTextColumn CanUserResize="False" CanUserSort="False" IsReadOnly="True" Header=" Name" Binding="{Binding Path=name}" MinWidth="180" >
-                <DataGridTextColumn.HeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="LightCoral"/>
-                            <Setter Property="Height" Value="30"/>
-                        </Style>
-                </DataGridTextColumn.HeaderStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn CanUserResize="False" CanUserSort="False" IsReadOnly="True" Header=" Score" Binding="{Binding Path=score}" MinWidth="145">
+                <DataGridTextColumn CanUserResize="False" CanUserSort="False" IsReadOnly="True" Header=" Name" Binding="{Binding Path=name}" MinWidth="225" >
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="LightCoral"/>
                             <Setter Property="Height" Value="30"/>
                         </Style>
-                </DataGridTextColumn.HeaderStyle>
-              </DataGridTextColumn>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn CanUserResize="False" CanUserSort="False" IsReadOnly="True" Header=" Score" Binding="{Binding Path=score}" MinWidth="180">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="LightCoral"/>
+                            <Setter Property="Height" Value="30"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

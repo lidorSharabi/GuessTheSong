@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GuessTheSong"
         xmlns:controls="clr-namespace:GuessTheSong.Controls"
         mc:Ignorable="d"
-        Title="GameWindow" Height="700" Width="700" FontFamily="Comic Sans MS" FontSize="20">
+        Title="Guess The Song" Height="700" Width="700" FontFamily="Comic Sans MS" FontSize="20">
     <Window.Resources>
 
         <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">

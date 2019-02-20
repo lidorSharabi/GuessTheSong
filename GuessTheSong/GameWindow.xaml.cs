@@ -41,6 +41,7 @@ namespace GuessTheSong
             qm = new QuestionsManager("dreamtheater", "Rock", 2000, dbHandler);
             StartTimer();
             this.dbHandler = dbHandler;
+            ScoreTxtb.Text = this.score.ToString();
         }
 
         private void StartTimer()
@@ -54,7 +55,8 @@ namespace GuessTheSong
                 {
                     this.timer.Stop();
                     UpdateLives();
-                    if(lives > 0)
+                    EndLevel();
+                    if (lives > 0)
                     {
                         NextQ();
                     }
@@ -69,11 +71,15 @@ namespace GuessTheSong
             this.lives--;
             panel.Children.RemoveAt(0);
             if (this.lives == 0)
-            {
-               
+            {               
                 //update score in table
                 this.dbHandler.SaveUserScore(this.score);
                 //open new page - game over + scores
+                ScoresWindow scoresWin = new ScoresWindow(dbHandler);
+                this.Visibility = Visibility.Hidden;
+                scoresWin.Owner = this;
+                scoresWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                scoresWin.ShowDialog();
                 return;
             }                  
         }

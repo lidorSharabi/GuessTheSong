@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuessTheSong"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="700" FontFamily="Comic Sans MS" FontSize="24" >
+        Title="Guess The Song" Height="600" Width="700" FontFamily="Comic Sans MS" FontSize="24" >
     <Window.Resources>
 
         <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
