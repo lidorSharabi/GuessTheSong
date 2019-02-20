@@ -29,6 +29,7 @@ namespace GuessTheSong
         private int levelTime;
         private int score = 0;
         private DataBaseHandler dbHandler;
+        private QuestionsManager qm;
         public GameWindow(string userName, DataBaseHandler dbHandler)
         {
             InitializeComponent();
@@ -73,9 +74,6 @@ namespace GuessTheSong
                 //update score in table
                 this.dbHandler.SaveUserScore(this.score);
                 //open new page - game over + scores
-
-              
-
                 return;
             }                  
         }
@@ -117,7 +115,6 @@ namespace GuessTheSong
             ScoreTxtb.Text = this.score.ToString();
             EndLevel();
             await Task.Run(() => NextQ());
-            //NextQ();
         }
 
         internal void NextQ()
@@ -125,6 +122,7 @@ namespace GuessTheSong
             Thread.Sleep(1000);
             StartTimer();
             //await Task.Run(() => StartTimer());
+            qm.AskQuestion();
             Dispatcher.Invoke(new Action(() =>
             {
                 answ1.Foreground = new SolidColorBrush(Colors.Black);
@@ -134,13 +132,7 @@ namespace GuessTheSong
             }));
             
         }
-        private void StartNewLevel()
-        {
-            //TODO - new query and answers
-            qm.AskQuestion();
 
-        //    StartTimer();
-        //}
         private void timer_Tick(object sender, System.EventArgs e)
         {
             //this.pb.Value = System.DateTime.Now.Second % 100;
