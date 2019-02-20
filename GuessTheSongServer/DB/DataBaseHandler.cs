@@ -47,7 +47,7 @@ namespace GuessTheSongServer.DB
                         //System.IO.File.WriteAllText(@"C:\Users\User\source\repos\lidorSharabi\GuessTheSong\GuessTheSongServer\Log\error.log.txt", ex.Message);
                     }
                 }
-                DBConnection.Close();
+                //DBConnection.Close();
                 return null;
             }
             return null;
@@ -103,6 +103,23 @@ namespace GuessTheSongServer.DB
                 while (reader.Read())
                 {
                     res.Add(new Artist() { Id = Int32.Parse(reader.GetString(0)), Desc = reader.GetString(1) });
+                }
+                reader.Close();
+            }
+            return res;
+        }
+
+        public List<Song> GetSongs(string query)
+        {
+            List<Song> res = new List<Song>();
+
+            if (DBConnection.IsConnect())
+            {
+                var cmd = new MySqlCommand(query, DBConnection.Connection);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    res.Add(new Song() { SongName = reader.GetString(0), Lyric = reader.GetString(1), Correctness = true });
                 }
                 reader.Close();
             }

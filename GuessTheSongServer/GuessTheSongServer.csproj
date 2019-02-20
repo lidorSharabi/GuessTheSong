@@ -59,6 +59,8 @@
     <Compile Include="Controller.cs" />
     <Compile Include="DB\DataBaseHandler.cs" />
     <Compile Include="DB\DBConnection.cs" />
+    <Compile Include="DB\QuestionQueries.cs" />
+    <Compile Include="DB\QuestionsManager.cs" />
     <Compile Include="DB\Song.cs" />
     <Compile Include="DM\Artist.cs" />
     <Compile Include="DM\Genre.cs" />

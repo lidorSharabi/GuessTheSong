@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessTheSongServer.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,13 +28,18 @@ namespace GuessTheSong
         private int level;
         private int levelTime;
         private int score = 0;
-        public GameWindow(string userName)
+        private DataBaseHandler dbHandler;
+        private QuestionsManager qm;
+
+        public GameWindow(string userName, DataBaseHandler dbHandler)
         {
             InitializeComponent();
             this.lives = 5;
             this.level = 1;
             this.levelTime = 30;
             UserNameTxtb.Text = userName;
+            this.dbHandler = dbHandler;
+            qm = new QuestionsManager("dreamtheater", "Rock", 2000, dbHandler);
             StartTimer();
         }
 
@@ -51,6 +57,7 @@ namespace GuessTheSong
                 }
                 this.time = this.time.Add(TimeSpan.FromSeconds(-1));
             }, Application.Current.Dispatcher);
+            StartNewLevel();
             this.timer.Start();
         }
 
@@ -115,6 +122,7 @@ namespace GuessTheSong
         private void StartNewLevel()
         {
             //TODO - new query and answers
+            qm.AskQuestion();
 
             StartTimer();
         }
