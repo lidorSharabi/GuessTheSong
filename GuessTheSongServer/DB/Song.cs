@@ -10,7 +10,5 @@ namespace GuessTheSongServer.DB
     {
         public string Lyrics;
         public string SongName;
-        public bool Correctness;
-        public bool Valid = true;
     }
 }

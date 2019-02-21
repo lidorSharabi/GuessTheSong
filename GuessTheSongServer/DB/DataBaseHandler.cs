@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace GuessTheSongServer.DB
     public class DataBaseHandler
     {
         static private DBConnection DBConnection;
+        string path = @"GuessTheSongServerLog.txt";
         public enum QueryType { SELECT, UPDATE, INSERT };
 
         public DataBaseHandler(string Server, string DatabaseName, string Password, string User)
@@ -45,7 +47,7 @@ namespace GuessTheSongServer.DB
                     }
                     catch (Exception ex)
                     {
-                        //System.IO.File.WriteAllText(@"C:\Users\User\source\repos\lidorSharabi\GuessTheSong\GuessTheSongServer\Log\error.log.txt", ex.Message);
+                        File.AppendAllText(path, "Server DB Error at RunQuery function" + ex.Message + Environment.NewLine);
                     }
                 }
                 //DBConnection.Close();
@@ -77,69 +79,85 @@ namespace GuessTheSongServer.DB
         {
             string query;
             int id = 1;
-            //DBConnection.Start();
-            if (DBConnection.IsConnect())
+            try
             {
-                //check the user id:
-                query = "SELECT users.id FROM guessthesong.users WHERE users.LastModified in " +
-                        "(SELECT max(users.LastModified) FROM users)";
-                var cmd = new MySqlCommand(query, DBConnection.Connection);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (DBConnection.IsConnect())
                 {
-                    id = Int32.Parse(reader.GetString(0));
-                }
-                reader.Close();
+                    //check the user id:
+                    query = "SELECT users.id FROM guessthesong.users WHERE users.LastModified in " +
+                            "(SELECT max(users.LastModified) FROM users)";
+                    var cmd = new MySqlCommand(query, DBConnection.Connection);
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        id = Int32.Parse(reader.GetString(0));
+                    }
+                    reader.Close();
 
-                //update user's score:
-                query = "UPDATE guessthesong.users SET users.Score = @score " +
-                        "WHERE users.id = @id";
-                MySqlCommand command = new MySqlCommand(query, DBConnection.Connection);
-                command.Parameters.AddWithValue("@score", score);
-                command.Parameters.AddWithValue("@id", id);
-                command.ExecuteNonQuery();
+                    //update user's score:
+                    query = "UPDATE guessthesong.users SET users.Score = @score " +
+                            "WHERE users.id = @id";
+                    MySqlCommand command = new MySqlCommand(query, DBConnection.Connection);
+                    command.Parameters.AddWithValue("@score", score);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
             }
-            //DBConnection.Close();
+            catch (Exception ex)
+            {
+                File.AppendAllText(path, "Server DB Error at SaveUserScore function" + ex.Message + Environment.NewLine);
+            }
         }
 
         public ObservableCollection<Score> GetTopScores()
         {
             ObservableCollection<Score> scores = new ObservableCollection<Score>();
-            //DBConnection.Start();
-            if (DBConnection.IsConnect())
+            try
             {
-                string query = "SELECT firstname, lastname, score FROM guessthesong.users" +
-                                " ORDER BY users.score DESC LIMIT 10";
-                var cmd = new MySqlCommand(query, DBConnection.Connection);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (DBConnection.IsConnect())
                 {
-                    string firstName = reader.GetString(0);
-                    string lastName = reader.GetString(1);
-                    string userName = firstName + " " + lastName;
-                    scores.Add(new Score() { name = userName, score = Int32.Parse(reader.GetString(2)) });
+                    string query = "SELECT firstname, lastname, score FROM guessthesong.users" +
+                                    " ORDER BY users.score DESC LIMIT 10";
+                    var cmd = new MySqlCommand(query, DBConnection.Connection);
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string firstName = reader.GetString(0);
+                        string lastName = reader.GetString(1);
+                        string userName = firstName + " " + lastName;
+                        scores.Add(new Score() { name = userName, score = Int32.Parse(reader.GetString(2)) });
+                    }
+                    reader.Close();
                 }
-                reader.Close();
             }
-            //DBConnection.Close();
+            catch (Exception ex)
+            {
+                File.AppendAllText(path, "Server DB Error at GetTopScores function" + ex.Message + Environment.NewLine);
+            }
             return scores;
         }
 
         public List<Genre> GetGenres()
         {
             List<Genre> res = new List<Genre>();
-            //DBConnection.Start();
-            if (DBConnection.IsConnect())
+            try
             {
-                //id = 1 is 'Not Available'
-                string query = "SELECT * FROM genres WHERE id != 1";
-                var cmd = new MySqlCommand(query, DBConnection.Connection);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (DBConnection.IsConnect())
                 {
-                    res.Add(new Genre() { Id = Int32.Parse(reader.GetString(0)), Desc = reader.GetString(1) });
+                    //id = 1 is 'Not Available'
+                    string query = "SELECT * FROM genres WHERE id != 1";
+                    var cmd = new MySqlCommand(query, DBConnection.Connection);
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        res.Add(new Genre() { Id = Int32.Parse(reader.GetString(0)), Desc = reader.GetString(1) });
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(path, "Server DB Error at GetGenres function" + ex.Message + Environment.NewLine);
             }
             return res;
         }
@@ -147,17 +165,23 @@ namespace GuessTheSongServer.DB
         public List<Artist> GetArtists()
         {
             List<Artist> res = new List<Artist>();
-            //DBConnection.Start();
-            if (DBConnection.IsConnect())
+            try
             {
-                string query = "SELECT t.id, t.artist FROM artists t";
-                var cmd = new MySqlCommand(query, DBConnection.Connection);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (DBConnection.IsConnect())
                 {
-                    res.Add(new Artist() { Id = Int32.Parse(reader.GetString(0)), Desc = reader.GetString(1) });
+                    string query = "SELECT t.id, t.artist FROM artists t";
+                    var cmd = new MySqlCommand(query, DBConnection.Connection);
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        res.Add(new Artist() { Id = Int32.Parse(reader.GetString(0)), Desc = reader.GetString(1) });
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(path, "Server DB Error at GetArtists function" + ex.Message + Environment.NewLine);
             }
             return res;
         }
@@ -165,18 +189,23 @@ namespace GuessTheSongServer.DB
         public List<Song> GetSongs(string query)
         {
             List<Song> res = new List<Song>();
-
-            if (DBConnection.IsConnect())
+            try
             {
-                var cmd = new MySqlCommand(query, DBConnection.Connection);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (DBConnection.IsConnect())
                 {
-                    res.Add(new Song() { SongName = reader.GetString(0), Lyrics = reader.GetString(1)});
+                    var cmd = new MySqlCommand(query, DBConnection.Connection);
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        res.Add(new Song() { SongName = reader.GetString(0), Lyrics = reader.GetString(1) });
+                    }
+                    reader.Close();
                 }
-                reader.Close();
             }
-            //DBConnection.Close();
+            catch (Exception ex)
+            {
+                File.AppendAllText(path, "Server DB Error at GetSongs function" + ex.Message + Environment.NewLine);
+            }
             return res;
         }
     }

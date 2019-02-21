@@ -163,22 +163,24 @@
         <Button x:Name="answ3" Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="10"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
         <Button x:Name="answ4" Content="Let's Play!" Style="{StaticResource RoundedButtonStyle}" Grid.Row="12"  Grid.Column="1" FontFamily="Comic Sans MS" FontSize="24" Width="350" Height="60" Click="Choose_Answer"/>
 
-        <Button x:Name="remez1_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="6" Margin="24,10,56,6" Grid.RowSpan="2" Click="Remez_Click">
+        <Button x:Name="remez1_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="6" Margin="24,10,56,6" Grid.RowSpan="2" Click="Remez_Click" ToolTip="הסרת שתי תשובות לא נכונות">
             <Border x:Name="remez1_brd" CornerRadius="25" Height="50" Width="50" Margin="0" Background="MediumPurple" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
 
-        <Button x:Name="remez2_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="8" Margin="24,10,56,6" Grid.RowSpan="2" Click="Remez_Click">
+        <Button x:Name="remez2_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="8" Margin="24,10,56,6" Grid.RowSpan="2" Click="Remez_Click" ToolTip="העבר שאלה">
             <Border x:Name="remez2_brd" CornerRadius="25" Height="50" Width="50" Margin="0" Background="red" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
 
-        <Button x:Name="remez3_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="10" Margin="24,10,56,6" Grid.RowSpan="2"  Click="Remez_Click">
+        <Button x:Name="remez3_btn" Height="70" Width="70" Background="Transparent" BorderThickness="0"  Grid.Row="10" Margin="24,10,56,6" Grid.RowSpan="2"  Click="Remez_Click" ToolTip="ראה את אמן השיר">
             <Border x:Name="remez3_brd" CornerRadius="25" Height="50" Width="50" Margin="0" Background="Orange" BorderThickness="4,4,4,4" >
                 <TextBlock Text="?" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Button>
+
+        <TextBlock x:Name="artist_name_remez" Grid.Row="12" Width="150" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

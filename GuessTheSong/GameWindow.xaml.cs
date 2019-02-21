@@ -164,7 +164,8 @@ namespace GuessTheSong
         private void UpdateLives()
         {
             this.lives--;
-            panel.Children.RemoveAt(0);
+            if (panel.Children.Count > 0)
+                panel.Children.RemoveAt(0);
             if (this.lives == 0)
             {
                 //update score in table
@@ -176,12 +177,16 @@ namespace GuessTheSong
 
         private void OpenScoreWindow()
         {
-            ScoresWindow scoresWin = new ScoresWindow(dbHandler);
-            scoresWin.Owner = this;
-            scoresWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            this.Visibility = Visibility.Hidden;
-            scoresWin.ShowDialog();
-            this.Close();
+            try
+            {
+                ScoresWindow scoresWin = new ScoresWindow(dbHandler);
+                scoresWin.Owner = this;
+                scoresWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                this.Visibility = Visibility.Hidden;
+                scoresWin.ShowDialog();
+                this.Close();
+            }
+            catch (Exception ex) { }
         }
 
         private void EndLevel()
@@ -201,10 +206,32 @@ namespace GuessTheSong
                 case "remez1_btn":
                     remez1_btn.IsEnabled = false;
                     remez1_brd.Background = new SolidColorBrush(Colors.Gray);
+                    int count = 0;
+                    if (currentQuestion.RightAnswer != answ1.Content.ToString() && count < 2)
+                    {
+                        answ1.Foreground = new SolidColorBrush(Colors.Red);
+                        count++;
+                    }
+                    if (currentQuestion.RightAnswer != answ2.Content.ToString() && count < 2)
+                    {
+                        answ2.Foreground = new SolidColorBrush(Colors.Red);
+                        count++;
+                    }
+                    if (currentQuestion.RightAnswer != answ3.Content.ToString() && count < 2)
+                    {
+                        answ3.Foreground = new SolidColorBrush(Colors.Red);
+                        count++;
+                    }
+                    if (currentQuestion.RightAnswer != answ4.Content.ToString() && count < 2)
+                    {
+                        answ4.Foreground = new SolidColorBrush(Colors.Red);
+                        count++;
+                    }
                     break;
                 case "remez2_btn":
                     remez2_btn.IsEnabled = false;
                     remez2_brd.Background = new SolidColorBrush(Colors.Gray);
+                    NextQuestion();
                     break;
                 case "remez3_btn":
                     remez3_btn.IsEnabled = false;
