@@ -66,7 +66,7 @@ namespace GuessTheSong
 
             dbHandler.SaveUserData(firstName, lastName, selectedDate, genreID, artistID);
 
-            GameWindow gameWin = new GameWindow(new User() { FirstName = firstName, LastName = lastName, ArtistId=artistID, GenreId=genreID }, dbHandler);
+            GameWindow gameWin = new GameWindow(new User() { FirstName = firstName, LastName = lastName, ArtistId=artistID, GenreId=genreID, Year = selectedDate.Value.Year }, dbHandler);
             this.Visibility = Visibility.Hidden;
             gameWin.Owner = this;
             gameWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;

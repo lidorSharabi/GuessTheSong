@@ -13,6 +13,6 @@ namespace GuessTheSongServer.DM
         public int ArtistId;
         public string FirstName;
         public string LastName;
-        public string Year;
+        public int Year;
     }
 }
