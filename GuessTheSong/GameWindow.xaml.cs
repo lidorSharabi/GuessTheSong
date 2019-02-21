@@ -96,7 +96,11 @@ namespace GuessTheSong
                 UpdateLives();
                 if (lives == 0)
                 {
-                    return;
+                    ScoresWindow ScoreWin = new ScoresWindow(dbHandler);
+                    this.Visibility = Visibility.Hidden;
+                    ScoreWin.Owner = this;
+                    ScoreWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    ScoreWin.ShowDialog();
                 }
             }
             ScoreTxtb.Text = this.score.ToString();
