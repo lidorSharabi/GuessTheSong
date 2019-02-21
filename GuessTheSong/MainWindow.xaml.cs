@@ -59,8 +59,8 @@ namespace GuessTheSong
         private void Submit_btn(object sender, RoutedEventArgs e)
         {
             DateTime? selectedDate = DateOfBirth.SelectedDate;
-            string firstName = FirstNameUI.Text;
-            string lastName = LastNameUI.Text;
+            string firstName = FirstNameUI.Text == "" ? "Unknown" : FirstNameUI.Text;
+            string lastName = LastNameUI.Text == "" ? "Unknown" : LastNameUI.Text;
             int genreID = ((MainWindowVM)DataContext).SelectedGenre;
             int artistID = ((MainWindowVM)DataContext).SelectedArtist;
 
