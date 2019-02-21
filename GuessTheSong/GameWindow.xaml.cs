@@ -67,10 +67,8 @@ namespace GuessTheSong
                     this.timer.Stop();
                     UpdateLives();
                     EndLevel();
-                    if (lives > 0)
-                    {
-                        NextQuestion();
-                    }
+                    NextQuestion();
+                    
                 }
                 this.time = this.time.Add(TimeSpan.FromSeconds(-1));
             }, Application.Current.Dispatcher);
@@ -94,14 +92,6 @@ namespace GuessTheSong
                 selectedAnswer.Foreground = new SolidColorBrush(Colors.Red);
                 this.timer.Stop();
                 UpdateLives();
-                if (lives == 0)
-                {
-                    ScoresWindow ScoreWin = new ScoresWindow(dbHandler);
-                    this.Visibility = Visibility.Hidden;
-                    ScoreWin.Owner = this;
-                    ScoreWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    ScoreWin.ShowDialog();
-                }
             }
             ScoreTxtb.Text = this.score.ToString();
             EndLevel();
@@ -169,7 +159,12 @@ namespace GuessTheSong
             {
                 //update score in table
                 this.dbHandler.SaveUserScore(this.score);
-                //TODO open new page - game over + scores
+                //open new page - game over + scores
+                ScoresWindow scoresWin = new ScoresWindow(dbHandler);
+                this.Visibility = Visibility.Hidden;
+                scoresWin.Owner = this;
+                scoresWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                scoresWin.ShowDialog();
                 return;
             }
         }
