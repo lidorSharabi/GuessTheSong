@@ -133,10 +133,13 @@ namespace GuessTheSong
                 fourAnswers = fourAnswers.OrderBy(a => Guid.NewGuid()).ToList();
 
             }
+            int start = NthIndexOf(selectedSong.Lyrics, ' ', 3);
+            start = start == selectedSong.Lyrics.Length ? 0 : start;
+            int end = NthIndexOf(selectedSong.Lyrics, ' ', 10);
             //TODO - if this is the hardest level (means there is no more questions, then and game)
             //TODO - choose new questions from harder level and call raffledNextQuestion again (with new questionPool)
             currentQuestion.RightAnswer = pool.Count >= 4 ? selectedSong.SongName : "selectedSong.SongName";
-            currentQuestion.Lyrics = pool.Count >= 4 ? selectedSong.Lyrics.Substring(0, NthIndexOf(selectedSong.Lyrics, ' ', 8)) : "Lyrics";
+            currentQuestion.Lyrics = pool.Count >= 4 ? selectedSong.Lyrics.Substring(start, end - start) : "Lyrics";
             currentQuestion.Answer1 = pool.Count >= 4 ? fourAnswers[0] : "fourAnswers[0].SongName";
             currentQuestion.Answer2 = pool.Count >= 4 ? fourAnswers[1] : "fourAnswers[1].SongName";
             currentQuestion.Answer3 = pool.Count >= 4 ? fourAnswers[2] : "fourAnswers[2].SongName";
@@ -208,14 +211,14 @@ namespace GuessTheSong
         {
             int num = 0;
             int length = 0;
-            
+
             while (num != n && length < target.Length)
             {
                 if (target[length] == value)
                     num++;
                 length++;
             }
-            return length;
+            return length - 1;
         }
     }
 }
