@@ -172,7 +172,7 @@ namespace GuessTheSongServer.DB
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    res.Add(new Song() { SongName = reader.GetString(0), Lyrics = reader.GetString(1)});
+                    res.Add(new Song() { SongName = reader.GetString(0), ArtistID = Int32.Parse(reader.GetString(1)), Lyrics = reader.GetString(2) });
                 }
                 reader.Close();
             }

@@ -54,18 +54,18 @@ namespace GuessTheSongServer.DB
             switch (level)
             {
                 case 1:
-                    query1 = String.Format(QuestionQueries.artist_genre_years_Query, genreID, artistID, decadeStart, decadeEnd);
+                    query1 = String.Format(QuestionQueries.artist_genre_years_Query, artistID, genreID, decadeStart, decadeEnd);
                     songs1 = dbHandler.GetSongs(query1);
-                    query2 = String.Format(QuestionQueries.artist_diffGenre_Query, genreID, artistID);
+                    query2 = String.Format(QuestionQueries.artist_diffGenre_Query, artistID, genreID);
                     songs2 = dbHandler.GetSongs(query2);
                     if (songs2.Count == 0)
                     {
-                        query2 = String.Format(QuestionQueries.artist_genre_widerYears_Query, genreID, artistID, decadeStart, decadeEnd);
+                        query2 = String.Format(QuestionQueries.artist_genre_widerYears_Query, artistID, genreID, decadeStart, decadeEnd);
                         songs2 = dbHandler.GetSongs(query2);
                     }
                     break;
                 case 2:
-                    query1 = String.Format(QuestionQueries.artist_genre_widerYears_Query, genreID, artistID, decadeStart, decadeEnd);
+                    query1 = String.Format(QuestionQueries.artist_genre_widerYears_Query, artistID, genreID, decadeStart, decadeEnd);
                     songs1 = dbHandler.GetSongs(query1);
                     query2 = String.Format(QuestionQueries.mostPopularArtist_genre_years, genreID, decadeStart, decadeEnd);
                     songs2 = dbHandler.GetSongs(query2);
@@ -80,7 +80,7 @@ namespace GuessTheSongServer.DB
                 case 4:
                     query1 = String.Format(QuestionQueries.popularArtist_genre_diffYears, genreID, decadeStart, decadeEnd);
                     songs1 = dbHandler.GetSongs(query1);
-                    query2 = String.Format(QuestionQueries.diffNonPopularArtist_genre_years, genreID, artistID, decadeStart, decadeEnd);
+                    query2 = String.Format(QuestionQueries.diffNonPopularArtist_genre_years, artistID, genreID, decadeStart, decadeEnd);
                     songs2 = dbHandler.GetSongs(query2);
                     break;
             }
