@@ -64,6 +64,8 @@
     <Compile Include="DB\Song.cs" />
     <Compile Include="DM\Artist.cs" />
     <Compile Include="DM\Genre.cs" />
+    <Compile Include="DM\Question.cs" />
+    <Compile Include="DM\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

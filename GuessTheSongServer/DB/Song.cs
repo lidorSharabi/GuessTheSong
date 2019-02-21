@@ -8,8 +8,9 @@ namespace GuessTheSongServer.DB
 {
     public class Song
     {
-        public string Lyric;
+        public string Lyrics;
         public string SongName;
         public bool Correctness;
+        public bool Valid = true;
     }
 }
