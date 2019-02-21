@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -76,7 +77,7 @@ namespace GuessTheSongServer.DB
         {
             string query;
             int id = 1;
-            DBConnection.Start();
+            //DBConnection.Start();
             if (DBConnection.IsConnect())
             {
                 //check the user id:
@@ -98,7 +99,30 @@ namespace GuessTheSongServer.DB
                 command.Parameters.AddWithValue("@id", id);
                 command.ExecuteNonQuery();
             }
-            DBConnection.Close();
+            //DBConnection.Close();
+        }
+
+        public ObservableCollection<Score> GetTopScores()
+        {
+            ObservableCollection<Score> scores = new ObservableCollection<Score>();
+            //DBConnection.Start();
+            if (DBConnection.IsConnect())
+            {
+                string query = "SELECT firstname, lastname, score FROM guessthesong.users" +
+                                " ORDER BY users.score DESC LIMIT 10";
+                var cmd = new MySqlCommand(query, DBConnection.Connection);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    string firstName = reader.GetString(0);
+                    string lastName = reader.GetString(1);
+                    string userName = firstName + " " + lastName;
+                    scores.Add(new Score() { name = userName, score = Int32.Parse(reader.GetString(2)) });
+                }
+                reader.Close();
+            }
+            //DBConnection.Close();
+            return scores;
         }
 
         public List<Genre> GetGenres()
@@ -152,6 +176,7 @@ namespace GuessTheSongServer.DB
                 }
                 reader.Close();
             }
+            //DBConnection.Close();
             return res;
         }
     }
