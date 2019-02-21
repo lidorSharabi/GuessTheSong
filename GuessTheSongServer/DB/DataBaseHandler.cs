@@ -208,5 +208,27 @@ namespace GuessTheSongServer.DB
             }
             return res;
         }
+
+        public string GetArtistById(int artistId)
+        {
+            string res = "";
+            try
+            {
+                if (DBConnection.IsConnect())
+                {
+                    string query = "SELECT t.artist FROM artists t WHERE t.id = " + artistId;
+                    var cmd = new MySqlCommand(query, DBConnection.Connection);
+                    var reader = cmd.ExecuteReader();
+                    reader.Read();
+                    res = reader.GetString(0);
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(path, "Server DB Error at GetArtistById function" + ex.Message + Environment.NewLine);
+            }
+            return res;
+        }
     }
 }

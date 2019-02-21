@@ -129,6 +129,7 @@ namespace GuessTheSong
 
                 currentQuestion.RightAnswer = selectedSong.Song.SongName;
                 currentQuestion.Lyrics = selectedSong.Song.Lyrics.Substring(start, end - start);
+                currentQuestion.ArtistId = selectedSong.Song.ArtistID;
                 currentQuestion.Answer1 = fourAnswers[0];
                 currentQuestion.Answer2 = fourAnswers[1];
                 currentQuestion.Answer3 = fourAnswers[2];
@@ -159,6 +160,7 @@ namespace GuessTheSong
             answ2.Content = q.Answer2;
             answ3.Content = q.Answer3;
             answ4.Content = q.Answer4;
+            artist_name_remez.Text = "";
         }
 
         private void UpdateLives()
@@ -236,6 +238,7 @@ namespace GuessTheSong
                 case "remez3_btn":
                     remez3_btn.IsEnabled = false;
                     remez3_brd.Background = new SolidColorBrush(Colors.Gray);
+                    artist_name_remez.Text = dbHandler.GetArtistById(currentQuestion.ArtistId);
                     break;
 
             }

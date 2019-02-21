@@ -10,6 +10,7 @@ namespace GuessTheSongServer.DM
     {
         public string Lyrics;
         public string RightAnswer;
+        public int ArtistId;
         public string Answer1;
         public string Answer2;
         public string Answer3;

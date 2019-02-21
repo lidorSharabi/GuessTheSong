@@ -181,6 +181,6 @@
             </Border>
         </Button>
 
-        <TextBlock x:Name="artist_name_remez" Grid.Row="12" Width="150" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="artist_name_remez" Grid.Row="12" Width="150" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>
