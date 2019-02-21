@@ -10,5 +10,6 @@ namespace GuessTheSongServer.DB
     {
         public string Lyrics;
         public string SongName;
+        public int ArtistID;
     }
 }
