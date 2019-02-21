@@ -61,12 +61,12 @@
     <Compile Include="DB\DBConnection.cs" />
     <Compile Include="DB\QuestionQueries.cs" />
     <Compile Include="DB\QuestionsManager.cs" />
-    <Compile Include="DB\Record.cs" />
-    <Compile Include="DB\Song.cs" />
     <Compile Include="DM\Artist.cs" />
     <Compile Include="DM\Genre.cs" />
+    <Compile Include="DM\Record.cs" />
     <Compile Include="DM\Score.cs" />
     <Compile Include="DM\Question.cs" />
+    <Compile Include="DM\Song.cs" />
     <Compile Include="DM\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

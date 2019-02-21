@@ -15,7 +15,6 @@ namespace GuessTheSongServer.DB
     {
         static private DBConnection DBConnection;
         string path = @"GuessTheSongServerLog.txt";
-        public enum QueryType { SELECT, UPDATE, INSERT };
 
         public DataBaseHandler(string Server, string DatabaseName, string Password, string User)
         {
@@ -34,28 +33,6 @@ namespace GuessTheSongServer.DB
             DBConnection.Close();
         }
 
-
-        public MySqlDataReader RunQuery(MySqlCommand command, QueryType type)
-        {
-            if (DBConnection.IsConnect())
-            {
-                if (type == QueryType.INSERT)
-                {
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        File.AppendAllText(path, "Server DB Error at RunQuery function" + ex.Message + Environment.NewLine);
-                    }
-                }
-                //DBConnection.Close();
-                return null;
-            }
-            return null;
-        }
-
         public void SaveUserData(string firstName, string lastName, DateTime? dateOfBirth, int genreID, int artistID)
         {
             int score = 0;
@@ -71,8 +48,14 @@ namespace GuessTheSongServer.DB
             command.Parameters.AddWithValue("@artist", artistID);
             command.Parameters.AddWithValue("@score", score);
             command.Parameters.AddWithValue("@lastModified", lastModified);
-
-            RunQuery(command, DataBaseHandler.QueryType.INSERT);
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(path, "Server DB Error at RunQuery function" + ex.Message + Environment.NewLine);
+            }
         }
 
         public void SaveUserScore(int score)
