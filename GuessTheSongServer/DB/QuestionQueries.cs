@@ -8,26 +8,63 @@ namespace GuessTheSongServer.DB
 {
     public static class QuestionQueries
     {
-        public static string easyQuery = @"SELECT lyrics.song, lyrics.lyrics FROM guessthesong.artists 
-INNER JOIN guessthesong.lyrics
-ON artists.id = lyrics.artist
-INNER JOIN guessthesong.genres
-ON lyrics.genre = genres.id 
-WHERE genres.genre = '{0}'
-AND artists.filteredName='{1}'
+        public static string artist_genre_years_Query = @"SELECT lyrics.song, lyrics.lyrics FROM guessthesong.lyrics
+WHERE lyrics.genre = '{0}'
+AND lyrics.artist = '{1}'
 AND (lyrics.year >= '{2}' AND lyrics.year < '{3}')
 LIMIT 20";
 
-        public static string easyQuery2 = @"SELECT lyrics.song, lyrics.lyrics FROM guessthesong.artists 
-INNER JOIN guessthesong.lyrics
-ON artists.id = lyrics.artist
-INNER JOIN guessthesong.genres
-ON lyrics.genre = genres.id 
-WHERE genres.genre = '{0}'
-AND artists.filteredName='{1}'
-AND (lyrics.year >= '{2}' AND lyrics.year < '{3}')
+        public static string artist_diffGenre_Query = @"SELECT lyrics.song, lyrics.lyrics
+FROM guessthesong.lyrics
+WHERE lyrics.genre != '{0}'
+AND lyrics.artist = '{1}'
 LIMIT 20";
 
+        public static string artist_genre_widerYears_Query = @"SELECT lyrics.song, lyrics.lyrics FROM guessthesong.lyrics
+WHERE lyrics.genre = '{0}'
+AND lyrics.artist = '{1}'
+AND (lyrics.year >= '{2}-10' AND lyrics.year < '{3}+10')
+LIMIT 20";
+
+        public static string mostPopularArtist_genre_years = @"SELECT song, lyrics FROM
+(SELECT lyrics.song, lyrics.lyrics, artists.familiarity, artists.popularity, MAX(familiarity), MAX(popularity)
+FROM guessthesong.artists
+INNER JOIN guessthesong.lyrics
+ON artists.id = lyrics.artist
+WHERE lyrics.genre = '{0}'
+AND (lyrics.year >= '{1}' AND lyrics.year < '{2}')
+GROUP BY artists.id
+HAVING artists.familiarity >= MAX(familiarity)-2 OR artists.popularity >= MAX(popularity)-2) as t
+LIMIT 20";
+
+        public static string diffNonPopularArtist_genre_years = @"SELECT lyrics.song, lyrics.lyrics
+FROM guessthesong.artists 
+INNER JOIN guessthesong.lyrics
+ON artists.id = lyrics.artist
+WHERE lyrics.genre = '{0}'
+AND lyrics.artist != '{1}'
+AND (lyrics.year >= '{2}' AND lyrics.year < '{3}')
+ORDER BY artists.familiarity, artists.popularity ASC
+LIMIT 20";
+
+        public static string nonPopularArtist_genre_years = @"SELECT lyrics.song, lyrics.lyrics
+FROM guessthesong.artists 
+INNER JOIN guessthesong.lyrics
+ON artists.id = lyrics.artist
+WHERE lyrics.genre = '{0}'
+AND (lyrics.year >= '{1}' AND lyrics.year < '{2}')
+ORDER BY artists.familiarity, artists.popularity ASC
+LIMIT 20";
+
+        public static string popularArtist_genre_diffYears = @"SELECT lyrics.song, lyrics.lyrics
+FROM guessthesong.artists 
+INNER JOIN guessthesong.lyrics
+ON artists.id = lyrics.artist
+WHERE lyrics.genre = '{0}'
+AND ((lyrics.year >= '{1}'-10 AND lyrics.year < '{2}'-10)
+OR (lyrics.year >= '{1}'+10 AND lyrics.year < '{2}'+10))
+ORDER BY artists.familiarity, artists.popularity DESC
+LIMIT 20";
 
 
     }

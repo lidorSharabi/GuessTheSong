@@ -61,6 +61,7 @@
     <Compile Include="DB\DBConnection.cs" />
     <Compile Include="DB\QuestionQueries.cs" />
     <Compile Include="DB\QuestionsManager.cs" />
+    <Compile Include="DB\Record.cs" />
     <Compile Include="DB\Song.cs" />
     <Compile Include="DM\Artist.cs" />
     <Compile Include="DM\Genre.cs" />

@@ -32,7 +32,7 @@ namespace GuessTheSong
         private int score = 0;
         private DataBaseHandler dbHandler;
         private QuestionsManager qm;
-        private List<Song> questionPool;
+        private List<Record> questionPool;
         private Question currentQuestion = new Question();
         public GameWindow(User user, DataBaseHandler dbHandler)
         {
@@ -48,9 +48,8 @@ namespace GuessTheSong
             this.levelTime = 30;
             ScoreTxtb.Text = this.score.ToString();
             UserNameTxtb.Text = user.FirstName + " " + user.LastName;
-            //TODO - use year, artist and genre id's
-            qm = new QuestionsManager("dreamtheater", "Rock", 2000, dbHandler);
-            questionPool = qm.AskQuestion();
+            qm = new QuestionsManager(4, 3, 2000, dbHandler);
+            questionPool = qm.AskQuestion(1);
             raffledNextQuestion();
             StartTimer();
         }
@@ -107,15 +106,15 @@ namespace GuessTheSong
 
         private void raffledNextQuestion()
         {
-            List<Song> pool = questionPool.Where(q => q.Valid && q.Correctness).ToList();
+            List<Record> pool = questionPool.Where(q => q.Valid && q.Correctness).ToList();
             pool[0].Valid = false;
-            Song selectedSong = pool[0];
+            Record selectedSong = pool[0];
             List<string> fourAnswers = new List<string>();
             if (pool.Count >= 4) // because we need at least 4 answers
             {
                 //get distinct wrong Answers list shuffled
-                List<string> wrongAnswers = questionPool.Where(q => q.SongName != selectedSong.SongName).OrderBy(q => Guid.NewGuid()).Select(q => q.SongName).Distinct().ToList();
-                fourAnswers.Add(selectedSong.SongName);
+                List<string> wrongAnswers = questionPool.Where(q => q.Song.SongName != selectedSong.Song.SongName).OrderBy(q => Guid.NewGuid()).Select(q => q.Song.SongName).Distinct().ToList();
+                fourAnswers.Add(selectedSong.Song.SongName);
                 fourAnswers.Add(wrongAnswers[0]);
                 fourAnswers.Add(wrongAnswers[1]);
                 fourAnswers.Add(wrongAnswers[2]);
@@ -125,8 +124,8 @@ namespace GuessTheSong
             }
             //TODO - if this is the hardest level (means there is no more questions, then and game)
             //TODO - choose new questions from harder level and call raffledNextQuestion again (with new questionPool)
-            currentQuestion.RightAnswer = pool.Count >= 4 ? selectedSong.SongName : "selectedSong.SongName";
-            currentQuestion.Lyrics = pool.Count >= 4 ? selectedSong.Lyrics.Substring(0, NthIndexOf(selectedSong.Lyrics, ' ', 8)) : "Lyrics";
+            currentQuestion.RightAnswer = pool.Count >= 4 ? selectedSong.Song.SongName : "selectedSong.SongName";
+            currentQuestion.Lyrics = pool.Count >= 4 ? selectedSong.Song.Lyrics.Substring(0, NthIndexOf(selectedSong.Song.Lyrics, ' ', 8)) : "Lyrics";
             currentQuestion.Answer1 = pool.Count >= 4 ? fourAnswers[0] : "fourAnswers[0].SongName";
             currentQuestion.Answer2 = pool.Count >= 4 ? fourAnswers[1] : "fourAnswers[1].SongName";
             currentQuestion.Answer3 = pool.Count >= 4 ? fourAnswers[2] : "fourAnswers[2].SongName";
