@@ -67,7 +67,7 @@ namespace GuessTheSongServer.DB
                 if (DBConnection.IsConnect())
                 {
                     //check the user id:
-                    query = "SELECT users.id FROM guessthesong.users WHERE users.LastModified in " +
+                    query = "SELECT users.id FROM team12.users WHERE users.LastModified in " +
                             "(SELECT max(users.LastModified) FROM users)";
                     var cmd = new MySqlCommand(query, DBConnection.Connection);
                     var reader = cmd.ExecuteReader();
@@ -78,7 +78,7 @@ namespace GuessTheSongServer.DB
                     reader.Close();
 
                     //update user's score:
-                    query = "UPDATE guessthesong.users SET users.Score = @score " +
+                    query = "UPDATE team12.users SET users.Score = @score " +
                             "WHERE users.id = @id";
                     MySqlCommand command = new MySqlCommand(query, DBConnection.Connection);
                     command.Parameters.AddWithValue("@score", score);
@@ -99,7 +99,7 @@ namespace GuessTheSongServer.DB
             {
                 if (DBConnection.IsConnect())
                 {
-                    string query = "SELECT firstname, lastname, score FROM guessthesong.users" +
+                    string query = "SELECT firstname, lastname, score FROM team12.users" +
                                     " ORDER BY users.score DESC LIMIT 10";
                     var cmd = new MySqlCommand(query, DBConnection.Connection);
                     var reader = cmd.ExecuteReader();
