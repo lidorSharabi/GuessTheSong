@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using System.Configuration;  
+using System.Configuration;
+using System.IO;
 
 namespace GuessTheSongServer.DB
 {
@@ -64,9 +65,9 @@ namespace GuessTheSongServer.DB
                 connection = new MySqlConnection(connstring);
                 connection.Open();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine("Error: " + e);
+                File.AppendAllText(@"GuessTheSongServerLog.txt", "Server DB Error at Start Connection" + ex.Message + Environment.NewLine);
                 return false;
             }
             return true;
