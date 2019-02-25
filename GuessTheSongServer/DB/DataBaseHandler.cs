@@ -178,6 +178,7 @@ namespace GuessTheSongServer.DB
                 {
                     var cmd = new MySqlCommand(query, DBConnection.Connection);
                     var reader = cmd.ExecuteReader();
+                    // turn the resulted rows to Song objects
                     while (reader.Read())
                     {
                         res.Add(new Song() { SongName = reader.GetString(0), ArtistID = Int32.Parse(reader.GetString(1)), Lyrics = reader.GetString(2) });
